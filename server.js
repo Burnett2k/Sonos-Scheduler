@@ -15,14 +15,14 @@ function handleRequest(request, response){
 
 var rule = new schedule.RecurrenceRule();
 rule.dayOfWeek = [0, new schedule.Range(0, 6)];
-rule.minute = 31;
+rule.minute = 30;
 rule.hour = 21;
  
 var eveningRoutine = schedule.scheduleJob(rule, function() {
 	console.log("we hit the timer!!!");
-	request('http://localhost:5005/resumeall', function (error, response, body) {
+	request('http://localhost:5005/master%20room/play', function (error, response, body) {
 	  if (!error && response.statusCode == 200) {
-	    console.log(body) // Show the HTML for the Google homepage.
+	    console.log(body);
 	  }
 	})
 })
