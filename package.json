@@ -1,0 +1,26 @@
+{
+  "name": "sonos-scheduler",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "request": "^2.79.0",
+    "node-schedule": "^1.2.0"
+  },
+  "devDependencies": {
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Burnett2k/Sonos-Scheduler.git"
+  },
+  "author": "Sawyer Burnett",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Burnett2k/Sonos-Scheduler/issues"
+  },
+  "homepage": "https://github.com/Burnett2k/Sonos-Scheduler#readme"
+}
