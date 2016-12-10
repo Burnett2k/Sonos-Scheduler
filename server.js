@@ -13,32 +13,42 @@ function handleRequest(request, response){
 
 
 
-var rule = new schedule.RecurrenceRule();
-rule.dayOfWeek = [0, new schedule.Range(0, 6)];
-rule.minute = 30;
-rule.hour = 21;
+//evening routine
+//1. Say it is time to start getting ready for bed
+//2. Put on some good music
+var eveningRule = new schedule.RecurrenceRule();
+eveningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
+eveningRule.minute = 30;
+eveningRule.hour = 21;
  
-var eveningRoutine = schedule.scheduleJob(rule, function() {
+var eveningRoutine = schedule.scheduleJob(eveningRule, function() {
 	console.log("we hit the timer!!!");
-	request('http://localhost:5005/master%20room/play', function (error, response, body) {
+	request('http://localhost:5005/master%20room/favorite/sleep', function (error, response, body) {
 	  if (!error && response.statusCode == 200) {
 	    console.log(body);
 	  }
 	})
 })
 
+
 //morning routine
 //1. Play wake up greeting!
 //2. Play weather
 //3. Start playing good music
 
-
-//evening routine
-//1. Say it is time to start getting ready for bed
-//2. Put on some good music
-
-
-
+var morningRule = new schedule.RecurrenceRule();
+morningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
+morningRule.minute = 45;
+morningRule.hour = 5;
+ 
+var morningRoutine = schedule.scheduleJob(morningRule, function() {
+	console.log("we hit the timer!!!");
+	request('http://localhost:5005/master%20room/favorite/starred', function (error, response, body) {
+	  if (!error && response.statusCode == 200) {
+	    console.log(body);
+	  }
+	})
+})
 
 //Create a server
 var server = http.createServer(handleRequest);
