@@ -20,8 +20,9 @@ var eveningRule = new schedule.RecurrenceRule();
 eveningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
 eveningRule.minute = 30;
 eveningRule.hour = 21;
+var eveningRuleName = 'evening';
  
-var eveningRoutine = schedule.scheduleJob(eveningRule, function() {
+var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
 	console.log("we hit the timer!!!");
 	request('http://localhost:5005/master%20room/favorite/sleep', function (error, response, body) {
 	  if (!error && response.statusCode == 200) {
@@ -45,8 +46,9 @@ var morningRule = new schedule.RecurrenceRule();
 morningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
 morningRule.minute = 45;
 morningRule.hour = 7;
+var morningRuleName = 'morning';
  
-var morningRoutine = schedule.scheduleJob(morningRule, function() {
+var morningRoutine = schedule.scheduleJob(morningRuleName, morningRule, function() {
 	console.log("we hit the timer!!!");
 	request('http://localhost:5005/master%20room/favorite/starred', function (error, response, body) {
 	  if (!error && response.statusCode == 200) {
@@ -60,7 +62,11 @@ var morningRoutine = schedule.scheduleJob(morningRule, function() {
 	})
 })
 
-console.log(schedule.scheduledJobs);
+var jobs = schedule.scheduledJobs;
+for(var i in jobs)
+{
+	console.log(jobs[i].name);
+}
 
 //Create a server
 var server = http.createServer(handleRequest);
