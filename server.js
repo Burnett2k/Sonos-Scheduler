@@ -28,6 +28,11 @@ var eveningRoutine = schedule.scheduleJob(eveningRule, function() {
 	    console.log(body);
 	  }
 	})
+	request('http://localhost:5005/master%20room/volume/15', function (error, response, body) {
+	  if (!error && response.statusCode == 200) {
+	    console.log(body);
+	  }
+	})
 })
 
 
@@ -39,7 +44,7 @@ var eveningRoutine = schedule.scheduleJob(eveningRule, function() {
 var morningRule = new schedule.RecurrenceRule();
 morningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
 morningRule.minute = 45;
-morningRule.hour = 5;
+morningRule.hour = 7;
  
 var morningRoutine = schedule.scheduleJob(morningRule, function() {
 	console.log("we hit the timer!!!");
@@ -48,7 +53,14 @@ var morningRoutine = schedule.scheduleJob(morningRule, function() {
 	    console.log(body);
 	  }
 	})
+	request('http://localhost:5005/master%20room/volume/35', function (error, response, body) {
+	  if (!error && response.statusCode == 200) {
+	    console.log(body);
+	  }
+	})
 })
+
+console.log(schedule.scheduledJobs);
 
 //Create a server
 var server = http.createServer(handleRequest);
