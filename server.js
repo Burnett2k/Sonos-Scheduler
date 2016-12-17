@@ -24,6 +24,11 @@ var eveningRuleName = 'evening';
  
 var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
 	console.log("we hit the timer!!!");
+	request('http://localhost:5005/master%20room/say/good evening sawyer. I hope you had a good day today!/en-au', function (error, response, body) {
+	  if (!error && response.statusCode == 200) {
+	    console.log(body);
+	  }
+	})
 	request('http://localhost:5005/master%20room/favorite/sleep', function (error, response, body) {
 	  if (!error && response.statusCode == 200) {
 	    console.log(body);
@@ -50,6 +55,11 @@ var morningRuleName = 'morning';
  
 var morningRoutine = schedule.scheduleJob(morningRuleName, morningRule, function() {
 	console.log("we hit the timer!!!");
+	request('http://localhost:5005/master%20room/say/good morning sawyer. Please make sure to have a good day today!/en-au', function (error, response, body) {
+	  if (!error && response.statusCode == 200) {
+	    console.log(body);
+	  }
+	})
 	request('http://localhost:5005/master%20room/favorite/starred', function (error, response, body) {
 	  if (!error && response.statusCode == 200) {
 	    console.log(body);
@@ -63,9 +73,13 @@ var morningRoutine = schedule.scheduleJob(morningRuleName, morningRule, function
 })
 
 var jobs = schedule.scheduledJobs;
+
+console.log(schedule);
+
 for(var i in jobs)
 {
 	console.log(jobs[i].name);
+	console.log(jobs[i].nextInvocation());
 }
 
 //Create a server
