@@ -1,17 +1,43 @@
-//Lets require/import the HTTP module
+//required modules
 var http = require('http');
 var request = require('request');
 var schedule = require('node-schedule');
+var fs = require('fs');
 
-//Lets define a port we want to listen to
+//constants
 const PORT=8080; 
+
+//misc variables
+var settings = 'settings.json';
+var weatherOutput;
+var currentWeather;
+var dailyForecast;
+
+
+//reading values from settings.json configuration file
+var configuration = JSON.parse(
+	fs.readFileSync(settings)
+);
+
+
 
 //We need a function which handles requests and send response
 function handleRequest(request, response){
     response.end('It Works!! Path Hit: ' + request.url);
 }
 
-
+request('https://api.darksky.net/forecast/' + configuration.darksky + '/' +  configuration.latitude + ',' + configuration.longitude + '?units=auto', function (error, response, body) {
+	if (!error && response.statusCode == 200) {
+		weatherOutput = JSON.parse(body);
+	    currentWeather = 'Current weather is ' + weatherOutput.currently.summary + '. Temperature is ' + weatherOutput.currently.temperature + '. Precipitation chance is ' + weatherOutput.currently.precipProbability;
+		dailyForecast = "The daily Forecast is " + weatherOutput.daily.summary;
+	    request('http://localhost:5005/master%20room/say/' + currentWeather + ' ' + dailyForecast + '/en-gb', function (error, response, body) {
+		  if (!error && response.statusCode == 200) {
+		    console.log(body);
+		  }
+		})
+  	}	
+});
 
 //evening routine
 //1. Say it is time to start getting ready for bed
@@ -74,13 +100,13 @@ var morningRoutine = schedule.scheduleJob(morningRuleName, morningRule, function
 
 var jobs = schedule.scheduledJobs;
 
-console.log(schedule);
+//console.log(schedule);
 
-for(var i in jobs)
-{
-	console.log(jobs[i].name);
-	console.log(jobs[i].nextInvocation());
-}
+// for(var i in jobs)
+// {
+// 	console.log(jobs[i].name);
+// 	console.log(jobs[i].nextInvocation());
+// }
 
 //Create a server
 var server = http.createServer(handleRequest);
