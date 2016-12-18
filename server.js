@@ -10,40 +10,48 @@ const settings = 'settings.json';
 const darkSkyBaseURL = 'https://api.darksky.net/forecast/';
 const darkSkyQueryString = '?units=auto';
 const dailyQuoteBaseURL = 'http://quotes.rest/qod.json?category=inspire';
+const sayCommand = 'http://localhost:5005/master%20room/say/';
 
 //misc variables
 var weatherOutput;
 var currentWeather;
 var dailyForecast;
-var fullweatherSpeech;
-var logging = false;
+var morningPrompt;
+var logging = true;
 var quoteOutput;
+var qotd;
+var fullweatherSpeech;
+
 
 //read config. values from settings.json configuration file
 var configuration = JSON.parse(
 	fs.readFileSync(settings)
 );
 
-request(dailyQuoteBaseURL, function (error, response, body) {
-	if (handleResponse(error, response, body)) {
-		quoteOutput = JSON.parse(body);
-		var qotd = quoteOutput.quotes[0].quote;
-		console.log('quote of the day is.                   .' + qotd);
-	}
-});
-
 var requestURL = darkSkyBaseURL + configuration.darksky + '/' +  configuration.latitude + ',' + configuration.longitude + darkSkyQueryString;
-console.log(requestURL);
+
+//sending request to darksky api to get weather information
 request(requestURL, function (error, response, body) {
 	if (handleResponse(error, response, body)) {
 		weatherOutput = JSON.parse(body);
 		//console.log(weatherOutput);
 	    currentWeather = 'Current weather is ' + weatherOutput.currently.summary + '. Temperature is ' + weatherOutput.currently.temperature + '. Precipitation chance is ' + weatherOutput.currently.precipProbability;
 		dailyForecast = "The daily Forecast is " + weatherOutput.daily.summary;
-		fullweatherSpeech = 'http://localhost:5005/master%20room/say/' + currentWeather + ' ' + dailyForecast + '/en-gb';
+		
 
-	    request(fullweatherSpeech, function (error, response, body) {
-		  handleResponse(error, response, body);
+		//sending request to get a daily quote
+		request(dailyQuoteBaseURL, function (error, response, body) {
+			if (handleResponse(error, response, body)) {
+				quoteOutput = JSON.parse(body);
+
+				//get first quote in array passed back
+				qotd = 'quote of the day is.                   .' + quoteOutput.contents.quotes[0].quote;
+
+				fullweatherSpeech = sayCommand + currentWeather + ' ' + dailyForecast + qotd + '/en-gb';
+				request(fullweatherSpeech, function (error, response, body) {
+					handleResponse(error, response, body);
+				})
+			}
 		})
   	}	
 });
