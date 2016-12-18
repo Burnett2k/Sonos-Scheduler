@@ -64,7 +64,7 @@ var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function
 //3. Start playing good music
 var morningRule = new schedule.RecurrenceRule();
 morningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
-morningRule.minute = 45;
+morningRule.minute = 15;
 morningRule.hour = 7;
 var morningRuleName = 'morning';
  
@@ -74,6 +74,9 @@ var morningRoutine = schedule.scheduleJob(morningRuleName, morningRule, function
 		handleResponse(error, response, body);
 	})
 	request('http://localhost:5005/master%20room/favorite/starred', function (error, response, body) {
+		handleResponse(error, response, body);
+	})
+	request('http://localhost:5005/master%20room/shuffle/on', function (error, response, body) {
 		handleResponse(error, response, body);
 	})
 	request('http://localhost:5005/master%20room/volume/35', function (error, response, body) {
