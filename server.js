@@ -12,6 +12,7 @@ var settings = 'settings.json';
 var weatherOutput;
 var currentWeather;
 var dailyForecast;
+var fullweatherSpeech;
 
 
 //reading values from settings.json configuration file
@@ -26,12 +27,17 @@ function handleRequest(request, response){
     response.end('It Works!! Path Hit: ' + request.url);
 }
 
-request('https://api.darksky.net/forecast/' + configuration.darksky + '/' +  configuration.latitude + ',' + configuration.longitude + '?units=auto', function (error, response, body) {
+var requestURL = 'https://api.darksky.net/forecast/' + configuration.darksky + '/' +  configuration.latitude + ',' + configuration.longitude + '?units=auto';
+console.log(requestURL);
+request(requestURL, function (error, response, body) {
 	if (!error && response.statusCode == 200) {
 		weatherOutput = JSON.parse(body);
+		console.log(weatherOutput);
 	    currentWeather = 'Current weather is ' + weatherOutput.currently.summary + '. Temperature is ' + weatherOutput.currently.temperature + '. Precipitation chance is ' + weatherOutput.currently.precipProbability;
 		dailyForecast = "The daily Forecast is " + weatherOutput.daily.summary;
-	    request('http://localhost:5005/master%20room/say/' + currentWeather + ' ' + dailyForecast + '/en-gb', function (error, response, body) {
+		fullweatherSpeech = 'http://localhost:5005/master%20room/say/' + currentWeather + ' ' + dailyForecast + '/en-gb';
+
+	    request(fullweatherSpeech, function (error, response, body) {
 		  if (!error && response.statusCode == 200) {
 		    console.log(body);
 		  }
