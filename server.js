@@ -7,20 +7,32 @@ var fs = require('fs');
 //constants
 const PORT=8080;
 const settings = 'settings.json'; 
+const darkSkyBaseURL = 'https://api.darksky.net/forecast/';
+const darkSkyQueryString = '?units=auto';
+const dailyQuoteBaseURL = 'http://quotes.rest/qod.json?category=inspire';
 
 //misc variables
 var weatherOutput;
 var currentWeather;
 var dailyForecast;
 var fullweatherSpeech;
-var logging = true;
+var logging = false;
+var quoteOutput;
 
 //read config. values from settings.json configuration file
 var configuration = JSON.parse(
 	fs.readFileSync(settings)
 );
 
-var requestURL = 'https://api.darksky.net/forecast/' + configuration.darksky + '/' +  configuration.latitude + ',' + configuration.longitude + '?units=auto';
+request(dailyQuoteBaseURL, function (error, response, body) {
+	if (handleResponse(error, response, body)) {
+		quoteOutput = JSON.parse(body);
+		var qotd = quoteOutput.quotes[0].quote;
+		console.log('quote of the day is.                   .' + qotd);
+	}
+});
+
+var requestURL = darkSkyBaseURL + configuration.darksky + '/' +  configuration.latitude + ',' + configuration.longitude + darkSkyQueryString;
 console.log(requestURL);
 request(requestURL, function (error, response, body) {
 	if (handleResponse(error, response, body)) {
