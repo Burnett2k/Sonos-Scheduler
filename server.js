@@ -8,7 +8,7 @@ var fs = require('fs');
 const PORT=8080;
 const settings = 'settings.json'; 
 const darkSkyBaseURL = 'https://api.darksky.net/forecast/';
-const darkSkyQueryString = '?units=auto';
+const darkSkyQueryString = '?units=us&language=en&exclude=[minutely,alerts,flags,hourly]';
 const dailyQuoteBaseURL = 'http://quotes.rest/qod.json?category=inspire';
 const sayCommand = 'http://localhost:5005/master%20room/say/';
 
@@ -21,9 +21,14 @@ var logging = true;
 var quoteOutput;
 var qotd;
 var fullweatherSpeech;
-
+var currentDate = new Date();
+var year = currentDate.getFullYear();
+var month = currentDate.getMonth();
+var day = currentDate.getDate();
+var currentDateUNIX = new Date(year, month, day).getTime() / 1000;
 
 //read config. values from settings.json configuration file
+
 var configuration = JSON.parse(
 	fs.readFileSync(settings)
 );
@@ -34,9 +39,13 @@ var requestURL = darkSkyBaseURL + configuration.darksky + '/' +  configuration.l
 request(requestURL, function (error, response, body) {
 	if (handleResponse(error, response, body)) {
 		weatherOutput = JSON.parse(body);
-		//console.log(weatherOutput);
-	    currentWeather = 'Current weather is ' + weatherOutput.currently.summary + '. Temperature is ' + weatherOutput.currently.temperature + '. Precipitation chance is ' + weatherOutput.currently.precipProbability;
-		dailyForecast = "The daily Forecast is " + weatherOutput.daily.summary;
+		var daily = weatherOutput.daily.data;
+		for (var i = 0; i < daily.length; i++) {
+			if (daily[i].time === currentDateUNIX) {
+	    		currentWeather = 'Current weather is ' + weatherOutput.currently.summary + '. Weekly weather is ' + weatherOutput.daily.summary + '. Temperature is ' + weatherOutput.currently.temperature + '. Precipitation chance is ' + weatherOutput.currently.precipProbability + '.';
+				dailyForecast = "The daily Forecast is " + daily[i].summary;
+			}
+		}
 		
 
 		//sending request to get a daily quote
@@ -55,6 +64,8 @@ request(requestURL, function (error, response, body) {
 		})
   	}	
 });
+
+
 
 //evening routine
 //1. Say it is time to start getting ready for bed
