@@ -106,7 +106,7 @@ function morningRoutine() {
 	var morningRule = new schedule.RecurrenceRule();
 	morningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
 	morningRule.minute = 15;
-	morningRule.hour = 7;
+	morningRule.hour = 6;
 	var morningRuleName = 'morning';
 	console.log("creating morning routine");
 	 
