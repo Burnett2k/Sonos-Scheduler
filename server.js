@@ -3,6 +3,10 @@ var http = require('http');
 var request = require('request');
 var schedule = require('node-schedule');
 var fs = require('fs');
+var express = require('express');
+var app = express();
+app.use('/', express.static(__dirname + '/public'));
+
 
 //constants
 const PORT=8080;
@@ -13,11 +17,13 @@ const dailyQuoteBaseURL = 'http://quotes.rest/qod.json?category=inspire';
 const sayCommand = 'http://localhost:5005/master%20room/say/';
 
 //misc variables
+
+
 var weatherOutput;
 var currentWeather;
 var dailyForecast;
 var morningPrompt;
-var logging = true;
+var logging = false;
 var quoteOutput;
 var qotd;
 var fullweatherSpeech;
@@ -58,20 +64,20 @@ function getWeather() {
 			}
 
 			//sending request to get a daily quote
-			request(dailyQuoteBaseURL, function (error, response, body) {
-				if (handleResponse(error, response, body)) {
-					quoteOutput = JSON.parse(body);
+			// request(dailyQuoteBaseURL, function (error, response, body) {
+			// 	if (handleResponse(error, response, body)) {
+			// 		quoteOutput = JSON.parse(body);
 
-					//get first quote in array passed back
-					qotd = 'quote of the day is.                   .' + quoteOutput.contents.quotes[0].quote;
-					//qotd is giving me issues so i've commented out its usage for now.
-					fullweatherSpeech = sayCommand + currentWeather + ' ' + dailyForecast + '/en-gb';
+			// 		//get first quote in array passed back
+			// 		qotd = 'quote of the day is.                   .' + quoteOutput.contents.quotes[0].quote;
+			// 		//qotd is giving me issues so i've commented out its usage for now.
+			// 		fullweatherSpeech = sayCommand + currentWeather + ' ' + dailyForecast + '/en-gb';
 					
-					request(fullweatherSpeech, function (error, response, body) {
-						handleResponse(error, response, body);
-					})
-				}
-			})
+			// 		request(fullweatherSpeech, function (error, response, body) {
+			// 			handleResponse(error, response, body);
+			// 		})
+			// 	}
+			// })
 	  	}	
 	})
 }
@@ -134,13 +140,8 @@ function morningRoutine() {
 // 	console.log(jobs[i].name);
 // 	console.log(jobs[i].nextInvocation());
 // }
-//Create a server
-var server = http.createServer(handleRequest);
 
-//callback to server when hitting
-function handleRequest(request, response){
-    response.end('It Works!! Path Hit: ' + request.url);
-}
+app.listen(PORT);
 
 function handleResponse(error, response, body) {
   if (!error && response.statusCode == 200 && logging) {
@@ -149,8 +150,7 @@ function handleResponse(error, response, body) {
   }
 }
 
-//Lets start our server
-server.listen(PORT, function(){
-    //Callback triggered when server is successfully listening. Hurray!
-    console.log("Server listening on: http://localhost:%s", PORT);
+app.get('/', function (req, res) {
+	console.log("hello");
+	res.sendfile('index.html');
 });
