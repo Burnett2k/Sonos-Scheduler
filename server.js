@@ -35,85 +35,97 @@ var configuration = JSON.parse(
 
 var requestURL = darkSkyBaseURL + configuration.darksky + '/' +  configuration.latitude + ',' + configuration.longitude + darkSkyQueryString;
 
-//sending request to darksky api to get weather information
-request(requestURL, function (error, response, body) {
-	if (handleResponse(error, response, body)) {
-		weatherOutput = JSON.parse(body);
-		var daily = weatherOutput.daily.data;
-		for (var i = 0; i < daily.length; i++) {
-			if (daily[i].time === currentDateUNIX) {
-	    		currentWeather = 'Current weather is ' + weatherOutput.currently.summary + '. Weekly weather is ' + weatherOutput.daily.summary + '. Temperature is ' + weatherOutput.currently.temperature + '. Precipitation chance is ' + weatherOutput.currently.precipProbability + '.';
-				dailyForecast = "The daily Forecast is " + daily[i].summary;
+
+getWeather();
+eveningRoutine();
+morningRoutine();
+
+
+
+function getWeather() {
+	//sending request to darksky api to get weather information
+	console.log("getting weather");
+	request(requestURL, function (error, response, body) {
+		if (handleResponse(error, response, body)) {
+			weatherOutput = JSON.parse(body);
+			var daily = weatherOutput.daily.data;
+			console.log(daily);
+			for (var i = 0; i < daily.length; i++) {
+				if (daily[i].time === currentDateUNIX) {
+		    		currentWeather = 'Current weather is ' + weatherOutput.currently.summary + '. Weekly weather is ' + weatherOutput.daily.summary + '. Temperature is ' + weatherOutput.currently.temperature + '. Precipitation chance is ' + weatherOutput.currently.precipProbability + '.';
+					dailyForecast = "The daily Forecast is " + daily[i].summary;
+				}
 			}
-		}
-		
 
-		//sending request to get a daily quote
-		request(dailyQuoteBaseURL, function (error, response, body) {
-			if (handleResponse(error, response, body)) {
-				quoteOutput = JSON.parse(body);
+			//sending request to get a daily quote
+			request(dailyQuoteBaseURL, function (error, response, body) {
+				if (handleResponse(error, response, body)) {
+					quoteOutput = JSON.parse(body);
 
-				//get first quote in array passed back
-				qotd = 'quote of the day is.                   .' + quoteOutput.contents.quotes[0].quote;
+					//get first quote in array passed back
+					qotd = 'quote of the day is.                   .' + quoteOutput.contents.quotes[0].quote;
+					//qotd is giving me issues so i've commented out its usage for now.
+					fullweatherSpeech = sayCommand + currentWeather + ' ' + dailyForecast + '/en-gb';
+					
+					request(fullweatherSpeech, function (error, response, body) {
+						handleResponse(error, response, body);
+					})
+				}
+			})
+	  	}	
+	})
+}
 
-				fullweatherSpeech = sayCommand + currentWeather + ' ' + dailyForecast + qotd + '/en-gb';
-				request(fullweatherSpeech, function (error, response, body) {
-					handleResponse(error, response, body);
-				})
-			}
+
+function eveningRoutine() {
+	//evening routine
+	//1. Say it is time to start getting ready for bed
+	//2. Put on some good music
+	var eveningRule = new schedule.RecurrenceRule();
+	eveningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
+	eveningRule.minute = 30;
+	eveningRule.hour = 21;
+	var eveningRuleName = 'evening';
+	console.log("creating evening routine");
+	 
+	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
+		console.log("we hit the timer!!!");
+		request('http://localhost:5005/master%20room/say/good evening sawyer. I hope you had a good day today!/en-au', function (error, response, body) {
+		 	handleResponse(error, response, body);
 		})
-  	}	
-});
+		request('http://localhost:5005/master%20room/favorite/sleep', function (error, response, body) {
+		  	handleResponse(error, response, body);
+		})
+		request('http://localhost:5005/master%20room/volume/15', function (error, response, body) {
+		 	handleResponse(error, response, body);
+		})
+	})
+}
 
-
-
-//evening routine
-//1. Say it is time to start getting ready for bed
-//2. Put on some good music
-var eveningRule = new schedule.RecurrenceRule();
-eveningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
-eveningRule.minute = 30;
-eveningRule.hour = 21;
-var eveningRuleName = 'evening';
- 
-var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
-	console.log("we hit the timer!!!");
-	request('http://localhost:5005/master%20room/say/good evening sawyer. I hope you had a good day today!/en-au', function (error, response, body) {
-	 	handleResponse(error, response, body);
+function morningRoutine() {
+	var morningRule = new schedule.RecurrenceRule();
+	morningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
+	morningRule.minute = 15;
+	morningRule.hour = 7;
+	var morningRuleName = 'morning';
+	console.log("creating morning routine");
+	 
+	var morningRoutine = schedule.scheduleJob(morningRuleName, morningRule, function() {
+		console.log("we hit the timer!!!");
+		request('http://localhost:5005/master%20room/say/good morning sawyer. Please make sure to have a good day today!/en-au', function (error, response, body) {
+			handleResponse(error, response, body);
+		})
+		request('http://localhost:5005/master%20room/favorite/starred', function (error, response, body) {
+			handleResponse(error, response, body);
+		})
+		request('http://localhost:5005/master%20room/shuffle/on', function (error, response, body) {
+			handleResponse(error, response, body);
+		})
+		request('http://localhost:5005/master%20room/volume/35', function (error, response, body) {
+	  		handleResponse(error, response, body);
+		})
 	})
-	request('http://localhost:5005/master%20room/favorite/sleep', function (error, response, body) {
-	  	handleResponse(error, response, body);
-	})
-	request('http://localhost:5005/master%20room/volume/15', function (error, response, body) {
-	 	handleResponse(error, response, body);
-	})
-})
-
-//morning routine
-//1. Play wake up greeting!
-//2. Play weather
-//3. Start playing good music
-var morningRule = new schedule.RecurrenceRule();
-morningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
-morningRule.minute = 15;
-morningRule.hour = 7;
-var morningRuleName = 'morning';
- 
-var morningRoutine = schedule.scheduleJob(morningRuleName, morningRule, function() {
-	console.log("we hit the timer!!!");
-	request('http://localhost:5005/master%20room/say/good morning sawyer. Please make sure to have a good day today!/en-au', function (error, response, body) {
-		handleResponse(error, response, body);
-	})
-	request('http://localhost:5005/master%20room/favorite/starred', function (error, response, body) {
-		handleResponse(error, response, body);
-	})
-	request('http://localhost:5005/master%20room/shuffle/on', function (error, response, body) {
-		handleResponse(error, response, body);
-	})
-	request('http://localhost:5005/master%20room/volume/35', function (error, response, body) {
-  		handleResponse(error, response, body);
-	})
-})
+}
 
 //var jobs = schedule.scheduledJobs;
 //console.log(schedule);
