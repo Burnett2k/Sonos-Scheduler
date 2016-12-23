@@ -76,7 +76,7 @@ function getWeather() {
 				}
 			}
 
-			request(sayCommand + currentWeather + ' ' + dailyForecast + '/en-gb', function (error, response, body) {
+			request(sayCommand + currentWeather + ' ' + dailyForecast, function (error, response, body) {
 				handleResponse(error, response, body);
 			})
 	  	}	
@@ -115,7 +115,7 @@ function eveningRoutine() {
 	 
 	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
 		console.log("we hit the timer!!!");
-		request('http://localhost:5005/master%20room/say/good evening sawyer. I hope you had a good day today!/en-au', function (error, response, body) {
+		request('http://localhost:5005/master%20room/say/good evening sawyer. I hope you had a good day today!', function (error, response, body) {
 		 	handleResponse(error, response, body);
 		})
 		request('http://localhost:5005/master%20room/favorite/sleep', function (error, response, body) {
