@@ -40,7 +40,7 @@ var weatherOutput;
 var currentWeather;
 var dailyForecast;
 var morningPrompt;
-var logging = false;
+var logging = true;
 var quoteOutput;
 var qotd;
 var fullweatherSpeech;
@@ -58,12 +58,8 @@ var configuration = JSON.parse(
 
 var requestURL = darkSkyBaseURL + configuration.darksky + '/' +  configuration.latitude + ',' + configuration.longitude + darkSkyQueryString;
 
-
-getWeather();
 eveningRoutine();
 morningRoutine();
-
-
 
 function getWeather() {
 	//sending request to darksky api to get weather information
@@ -80,25 +76,31 @@ function getWeather() {
 				}
 			}
 
-			//sending request to get a daily quote
-			// request(dailyQuoteBaseURL, function (error, response, body) {
-			// 	if (handleResponse(error, response, body)) {
-			// 		quoteOutput = JSON.parse(body);
-
-			// 		//get first quote in array passed back
-			// 		qotd = 'quote of the day is.                   .' + quoteOutput.contents.quotes[0].quote;
-			// 		//qotd is giving me issues so i've commented out its usage for now.
-			// 		fullweatherSpeech = sayCommand + currentWeather + ' ' + dailyForecast + '/en-gb';
-					
-			// 		request(fullweatherSpeech, function (error, response, body) {
-			// 			handleResponse(error, response, body);
-			// 		})
-			// 	}
-			// })
+			request(sayCommand + currentWeather + ' ' + dailyForecast + '/en-gb', function (error, response, body) {
+				handleResponse(error, response, body);
+			})
 	  	}	
 	})
 }
 
+function getQotd() {
+	//sending request to get a daily quote
+	console.log("getting qotd");
+	request(dailyQuoteBaseURL, function (error, response, body) {
+		if (handleResponse(error, response, body)) {
+			quoteOutput = JSON.parse(body);
+
+			//get first quote in array passed back
+			qotd = 'quote of the day is.                   .' + quoteOutput.contents.quotes[0].quote;
+			//qotd is giving me issues so i've commented out its usage for now.
+			fullweatherSpeech = sayCommand + qotd;
+			
+			request(fullweatherSpeech, function (error, response, body) {
+				handleResponse(error, response, body);
+			})
+		}
+	})
+}
 
 function eveningRoutine() {
 	//evening routine
@@ -135,6 +137,8 @@ function morningRoutine() {
 	 
 	var morningRoutine = schedule.scheduleJob(morningRuleName, morningRule, function() {
 		console.log("we hit the timer!!!");
+		getWeather();
+		getQotd();
 		request('http://localhost:5005/master%20room/say/good morning sawyer. Please make sure to have a good day today!/en-au', function (error, response, body) {
 			handleResponse(error, response, body);
 		})
@@ -166,8 +170,3 @@ function handleResponse(error, response, body) {
     return true;
   }
 }
-
-// app.get('*', function (req, res) {
-// 	console.log("hello");
-// 	res.sendfile('index.html');
-// });
