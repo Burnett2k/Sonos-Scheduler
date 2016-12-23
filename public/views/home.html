@@ -4,9 +4,10 @@
 
     <p>{{ tagline }}</p>
 
+    <button ng-click="previousTrack()">Previous</button>
 	<button ng-click="playSonos()">Play</button>
 	<button ng-click="pauseSonos()">Pause</button>
-
-	</br>
+	<button ng-click="nextTrack()">Next</button>
+	
 	<p>status: {{sonosResult.status}}</p>
 </div>
