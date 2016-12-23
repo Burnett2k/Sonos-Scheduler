@@ -3,11 +3,11 @@
 <div class="jumbotron text-center">
 
     <p>{{ tagline }}</p>
-
-    <button ng-click="previousTrack()">Previous</button>
-	<button ng-click="playSonos()">Play</button>
-	<button ng-click="pauseSonos()">Pause</button>
-	<button ng-click="nextTrack()">Next</button>
-	
+    <div style="border:1px solid">
+	    <i class="fa fa-step-backward fa-5x ha-icon" ng-click="previousTrack()"></i>
+		<i class="fa fa-play fa-5x ha-icon" ng-click="playSonos()"></i>
+		<i class="fa fa-pause fa-5x ha-icon" ng-click="pauseSonos()"></i>
+		<i class="fa fa-step-forward fa-5x ha-icon" ng-click="nextTrack()"></i>
+	</div>
 	<p>status: {{sonosResult.status}}</p>
 </div>
