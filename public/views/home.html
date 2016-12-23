@@ -3,11 +3,12 @@
 <div class="jumbotron text-center">
 
     <p>{{ tagline }}</p>
-    <div style="border:1px solid">
-	    <i class="fa fa-step-backward fa-5x ha-icon" ng-click="previousTrack()"></i>
-		<i class="fa fa-play fa-5x ha-icon" ng-click="playSonos()"></i>
-		<i class="fa fa-pause fa-5x ha-icon" ng-click="pauseSonos()"></i>
-		<i class="fa fa-step-forward fa-5x ha-icon" ng-click="nextTrack()"></i>
-	</div>
+    <i class="fa fa-step-backward fa-5x ha-icon" ng-click="previousTrack()"></i>
+	<i class="fa fa-play fa-5x ha-icon" ng-click="playSonos()"></i>
+	<i class="fa fa-pause fa-5x ha-icon" ng-click="pauseSonos()"></i>
+	<i class="fa fa-step-forward fa-5x ha-icon" ng-click="nextTrack()"></i>
 	<p>status: {{sonosResult.status}}</p>
+	</br>
+	</br>
+	<label style="padding-right:10px;">Text to Speech:</label><input type="text"></input><button>SAY</button>
 </div>
