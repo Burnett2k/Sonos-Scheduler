@@ -36,6 +36,16 @@ myApp.controller('MainController', ['$scope', '$http', function($scope, $http) {
        		$scope.sonosResult = 'error';
         });
 	};
+	$scope.sayCommand = function(speechText) {
+		if (speechText) {
+			$http.get('http://localhost:5005/master%20room/say/' + speechText).
+	       	then(function (response) { 
+	       		$scope.sonosResult = response.data.status;
+	        }, function (response) {
+	       		$scope.sonosResult = 'error';
+	        });
+       }
+	};
 
     $scope.tagline = 'Sonos Controls';   
 

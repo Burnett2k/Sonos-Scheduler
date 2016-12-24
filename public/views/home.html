@@ -12,5 +12,7 @@
 	</span>
 	</br>
 	</br>
-	<label style="padding-right:10px;">Text to Speech:</label><input type="text"></input><button>SAY</button>
+	<label style="padding-right:10px;">Text to Speech:</label>
+	<input type="text" ng-model="speechText" ng-keydown="($event.which === 13)?sayCommand(speechText):0"></input>
+	<button ng-click="sayCommand(speechText)">SAY</button>
 </div>
