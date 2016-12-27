@@ -46,6 +46,33 @@ myApp.controller('MainController', ['$scope', '$http', function($scope, $http) {
 	        });
        }
 	};
+	$scope.increaseVolume = function() {
+		adjustVolume(5);
+	};
+	$scope.decreaseVolume = function() {
+		adjustVolume(-5);
+	};
+	adjustVolume = function(increment) {
+		
+		console.log("adjusting volume by " + increment);
+		$http.get('http://localhost:5005/master%20room/volume/' + increment).
+       	then(function (response) { 
+       		$scope.sonosResult = response.data.status;
+        }, function (response) {
+       		$scope.sonosResult = 'error';
+        });
+	};
+	$scope.brightenLights = function() {
+		//todo add actual code to toggle lights
+		adjustLights(5);
+	};
+	$scope.dimLights = function() {
+		adjustLights(-5);
+	}
+	adjustLights = function(increment) {
+		console.log("adjusting lights by " + increment);
+		$scope.hueResult = "success";
+	}
 
     $scope.tagline = 'Sonos Controls';   
 

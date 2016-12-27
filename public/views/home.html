@@ -4,14 +4,33 @@
 
     <p>{{ tagline }}</p>
     <span>
-    <i class="fa fa-step-backward fa-5x ha-icon" ng-click="previousTrack()"></i>
-	<i class="fa fa-play fa-5x ha-icon" ng-click="playSonos()"></i>
-	<i class="fa fa-pause fa-5x ha-icon" ng-click="pauseSonos()"></i>
-	<i class="fa fa-step-forward fa-5x ha-icon" ng-click="nextTrack()"></i>
+    <i class="fa fa-step-backward fa-5x ha-icon" ng-click="previousTrack()" title="Previous Track"></i>
+	<i class="fa fa-play fa-5x ha-icon" ng-click="playSonos()" title="Play"></i>
+	<i class="fa fa-pause fa-5x ha-icon" ng-click="pauseSonos()" title="Pause"></i>
+	<i class="fa fa-step-forward fa-5x ha-icon" ng-click="nextTrack()" title="Next Track"></i>
 	</span>
 	</br>
+	<div>
+	<p> volume </p>
+	<i class="fa fa-minus-circle fa-5x ha-icon" ng-click="decreaseVolume()"></i>
+	<i class="fa fa-plus-circle fa-5x ha-icon" ng-click="increaseVolume()"></i>
+	</div>
 	<label style="padding-right:10px;">Text to Speech:</label>
 	<input type="text" ng-model="speechText" ng-keydown="($event.which === 13)?sayCommand(speechText):0"></input>
 	<button ng-click="sayCommand(speechText)">SAY</button>
 	<p>status: {{sonosResult}}</p>
+</div>
+
+<div class="jumbotron text-center">
+<p>Lighting controls</p>
+<i class="fa fa-power-off fa-5x ha-icon" ng-click="toggleLights()"></i>
+
+<p> dimmer </p>
+<i class="fa fa-minus-circle fa-5x ha-icon" ng-click="dimLights()"></i>
+<i class="fa fa-plus-circle fa-5x ha-icon" ng-click="brightenLights()"></i>
+
+<p>status: {{hueResult}} </p>
+
+
+
 </div>
