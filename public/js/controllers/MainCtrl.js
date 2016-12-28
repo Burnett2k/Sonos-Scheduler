@@ -47,10 +47,10 @@ myApp.controller('MainController', ['$scope', '$http', function($scope, $http) {
        }
 	};
 	$scope.increaseVolume = function() {
-		adjustVolume(5);
+		adjustVolume('+5');
 	};
 	$scope.decreaseVolume = function() {
-		adjustVolume(-5);
+		adjustVolume('-5');
 	};
 	adjustVolume = function(increment) {
 		
