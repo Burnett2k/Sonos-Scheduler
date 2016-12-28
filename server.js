@@ -114,6 +114,9 @@ function eveningRoutine() {
 	console.log("creating evening routine");
 	 
 	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
+		request({url: 'http://192.168.1.2/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":100}}, function(error, response, body) {
+			handleResponse(error, response, body);
+		})
 		console.log("we hit the timer!!!");
 		request('http://localhost:5005/master%20room/say/good evening sawyer. I hope you had a good day today!', function (error, response, body) {
 		 	handleResponse(error, response, body);
@@ -139,6 +142,9 @@ function morningRoutine() {
 		console.log("we hit the timer!!!");
 		getWeather();
 		getQotd();
+		request({url: 'http://192.168.1.2/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":254}}, function(error, response, body) {
+			handleResponse(error, response, body);
+		})
 		request('http://localhost:5005/master%20room/say/good morning sawyer. Please make sure to have a good day today!/en-au', function (error, response, body) {
 			handleResponse(error, response, body);
 		})
