@@ -46,6 +46,17 @@ myApp.controller('MainController', ['$scope', '$http', function($scope, $http) {
 	        });
        }
 	};
+	$scope.searchMusic = function(musicSearchText) {
+		console.log("searching for songs by " + musicSearchText);
+		if (musicSearchText) {
+			$http.get('http://localhost:5005/master%20room/musicsearch/spotify/song/' + musicSearchText).
+	       	then(function (response) { 
+	       		$scope.sonosResult = response.data.status;
+	        }, function (response) {
+	       		$scope.sonosResult = 'error';
+	        });
+       }
+	};
 	$scope.increaseVolume = function() {
 		adjustVolume('+5');
 	};
@@ -59,9 +70,10 @@ myApp.controller('MainController', ['$scope', '$http', function($scope, $http) {
        	then(function (response) { 
        		$scope.sonosResult = response.data.status;
         }, function (response) {
-       		$scope.sonosResult = 'error';
+       		$scope.sonosResult = 'error'; 
         });
 	};
+
 	$scope.brightenLights = function() {
 		//todo add actual code to toggle lights
 		adjustLights(5);
