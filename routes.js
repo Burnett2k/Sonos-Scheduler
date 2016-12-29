@@ -10,20 +10,36 @@ var Routine = require('./models/routine');
         // authentication routes
 
         // sample api route
-        app.get('/api/routines', function(req, res) {
-            // use mongoose to get all nerds in the database
-            Nerd.find(function(err, routines) {
+        app.get('/routines', function(req, res) {
+            console.log("in routes.js");
+            // use mongoose to get all routines in the database
+            Routine.find(function(err, routines) {
 
                 // if there is an error retrieving, send the error. 
                                 // nothing after res.send(err) will execute
                 if (err)
                     res.send(err);
 
-                res.json(routines); // return all nerds in JSON format
+                res.json(routines); // return all routines in JSON format
             });
         });
 
         // route to handle creating goes here (app.post)
+        app.post(function (req, res) {
+            var routine = new Routine();
+            routine.name = req.body.name;
+            routine.hour = req.body.hour;
+            routine.minute = req.body.minute;
+
+            routine.save(function(err) {
+                if (err)
+                    res.send(err);
+                res.json({ message: 'routine created!'});
+            });
+
+        });
+
+
         // route to handle delete goes here (app.delete)
 
         // frontend routes =========================================================
