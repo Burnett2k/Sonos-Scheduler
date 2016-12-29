@@ -1,7 +1,22 @@
 <!-- public/views/routine.html -->
 
-<div class="jumbotron text-center">
-    <h1>routines</h1>
+<div class="jumbotron text-center" ng-controller="RoutineController">
+    <h1>create new routines</h1>
 
+    <label style="padding-right:10px;">Name</label>
+	<input type="text" ng-model="newRoutineName"></input>
+	<label style="padding-right:10px;">Hour</label>
+	<input type="text" ng-model="newRoutineHour"></input>
+	<label style="padding-right:10px;">Minute</label>
+	<input type="text" ng-model="newRoutineMinute"></input>
+	<label style="padding-right:10px;">Day Of Week</label>
+	<input type="text" ng-model="newRoutineDayOfWeek"></input>
+	<button ng-click="searchMusic(musicSearchText)">Create</button>
+
+
+    <h1> existing routines </h1>
     <p>{{ tagline }}</p>
+    <div ng-repeat="value in routines">
+    	{{value}}
+    </div>
 </div>

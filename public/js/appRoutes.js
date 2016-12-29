@@ -9,7 +9,7 @@
             controller: 'MainController'
         })
 
-        // nerds page that will use the NerdController
+        // 
         .when('/routines', {
             templateUrl: 'views/routine.html',
             controller: 'RoutineController'

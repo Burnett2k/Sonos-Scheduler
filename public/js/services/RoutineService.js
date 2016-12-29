@@ -2,20 +2,23 @@
 angular.module('RoutineService', []).factory('Routine', ['$http', function($http) {
 
     return {
-        // call to get all nerds
+        // call to get all routines
         get : function() {
+            console.log("routine service");
             return $http.get('/api/routines');
         },
 
 
         // these will work when more API routes are defined on the Node side of things
-        // call to POST and create a new nerd
+        // call to POST and create a new routines
         create : function(routineData) {
+            console.log("create routine");
             return $http.post('/api/routines', routineData);
         },
 
-        // call to DELETE a nerd
+        // call to DELETE a routines
         delete : function(id) {
+            console.log("delete routine");
             return $http.delete('/api/routines/' + id);
         }
     }       
