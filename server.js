@@ -140,24 +140,40 @@ function morningRoutine() {
 	 
 	var morningRoutine = schedule.scheduleJob(morningRuleName, morningRule, function() {
 		console.log("we hit the timer!!!");
-		getWeather();
-		getQotd();
 		request({url: 'http://192.168.1.2/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":254}}, function(error, response, body) {
 			handleResponse(error, response, body);
 		})
-		request('http://localhost:5005/master%20room/say/good morning sawyer. Please make sure to have a good day today!/en-au', function (error, response, body) {
+
+		morningGreeting();
+
+		setTimeout(getWeather, 10000);
+		setTimeout(getQotd, 30000);
+
+		setTimeout(playStarred, 40000);
+		setTimeout(setShuffle('on'), 41000);
+		setTimeout(setVolume(35), 42000);
+	})
+}
+
+function morningGreeting() {
+	request('http://localhost:5005/master%20room/say/good morning sawyer. Please make sure to have a good day today!', function (error, response, body) {
 			handleResponse(error, response, body);
 		})
-		request('http://localhost:5005/master%20room/favorite/starred', function (error, response, body) {
+}
+function setShuffle(setting) {
+	request('http://localhost:5005/master%20room/shuffle/' + setting, function (error, response, body) {
 			handleResponse(error, response, body);
 		})
-		request('http://localhost:5005/master%20room/shuffle/on', function (error, response, body) {
-			handleResponse(error, response, body);
-		})
-		request('http://localhost:5005/master%20room/volume/35', function (error, response, body) {
+}
+function setVolume(setting) {
+	request('http://localhost:5005/master%20room/volume/' + setting, function (error, response, body) {
 	  		handleResponse(error, response, body);
 		})
-	})
+}
+function playStarred() {
+	request('http://localhost:5005/master%20room/favorite/starred', function (error, response, body) {
+			handleResponse(error, response, body);
+		})
 }
 
 //var jobs = schedule.scheduledJobs;
