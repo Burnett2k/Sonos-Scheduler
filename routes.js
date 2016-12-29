@@ -25,16 +25,20 @@ var Routine = require('./models/routine');
         });
 
         // route to handle creating goes here (app.post)
-        app.post(function (req, res) {
+        app.post('/api/routines', function (req, res) {
+
+            console.log('request = ' + req);
             var routine = new Routine();
             routine.name = req.body.name;
             routine.hour = req.body.hour;
             routine.minute = req.body.minute;
+            routine.dayOfWeek = req.body.dayOfWeek;
+            console.log('routine = ' + routine);
 
-            routine.save(function(err) {
-                if (err)
-                    res.send(err);
-                res.json({ message: 'routine created!'});
+            routine.save(function(err, routine) {
+                if (err) return console.error(err);//res.send(err);
+
+                //res.json({ message: 'routine created!'});
             });
 
         });

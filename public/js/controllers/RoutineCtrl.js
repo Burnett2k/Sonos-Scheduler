@@ -11,7 +11,17 @@ angular.module('RoutineCtrl', []).controller('RoutineController', function($scop
     })
 
     $scope.createRoutine = function() {
-		Routine.create().then(function(res) {
+
+        var routineArray = new Array($scope.newRoutineDayOfWeek);
+    	var json = {
+    		"name": $scope.newRoutineName,
+    		"hour": $scope.newRoutineHour,
+    		"minute": $scope.newRoutineMinute,
+    		"dayOfWeek": routineArray
+    	};
+    	
+    	console.log(json);
+		Routine.create(json).then(function(res) {
 	    	console.log("routine saved");
 	    })
     };

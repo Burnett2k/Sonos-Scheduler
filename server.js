@@ -31,6 +31,7 @@ var configuration = JSON.parse(
 	fs.readFileSync(settings)
 );
 
+db.Promise = global.Promise;
 db.connect(configuration.mongoUrl);
 
 //misc variables
