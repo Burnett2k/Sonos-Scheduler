@@ -1,7 +1,7 @@
 // app/routes.js
 
 // grab the nerd model we just created
-var Nerd = require('./models/routine');
+var Routine = require('./models/routine');
 
     module.exports = function(app) {
 

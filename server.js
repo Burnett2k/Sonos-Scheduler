@@ -5,25 +5,18 @@ var schedule = require('node-schedule');
 var fs = require('fs');
 var express = require('express');
 var app = express();
-
-
+var db  = require('mongoose');
 var bodyParser     = require('body-parser');
 
+//bodyparser stuff
 app.use(bodyParser.json()); 
-
-// parse application/vnd.api+json as json
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); 
-
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true })); 
 
 
 app.use('/', express.static(__dirname + '/public'));
-
 require('./routes')(app);
-
 exports = app;
-
 
 //constants
 const PORT=8080;
@@ -33,9 +26,14 @@ const darkSkyQueryString = '?units=us&language=en&exclude=[minutely,alerts,flags
 const dailyQuoteBaseURL = 'http://quotes.rest/qod.json?category=inspire';
 const sayCommand = 'http://localhost:5005/master%20room/say/';
 
+//read config. values from settings.json configuration file
+var configuration = JSON.parse(
+	fs.readFileSync(settings)
+);
+
+db.connect(configuration.mongoUrl);
+
 //misc variables
-
-
 var weatherOutput;
 var currentWeather;
 var dailyForecast;
@@ -50,11 +48,7 @@ var month = currentDate.getMonth();
 var day = currentDate.getDate();
 var currentDateUNIX = new Date(year, month, day).getTime() / 1000;
 
-//read config. values from settings.json configuration file
 
-var configuration = JSON.parse(
-	fs.readFileSync(settings)
-);
 
 var requestURL = darkSkyBaseURL + configuration.darksky + '/' +  configuration.latitude + ',' + configuration.longitude + darkSkyQueryString;
 
