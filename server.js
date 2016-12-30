@@ -145,8 +145,8 @@ function morningRoutine() {
 		setTimeout(getQotd, 30000);
 
 		setTimeout(playStarred, 40000);
-		setTimeout(setShuffle('on'), 41000);
-		setTimeout(setVolume(35), 42000);
+		setTimeout(setShuffle.bind(null, 'on'), 60000);
+		setTimeout(setVolume.bind(null, 35), 62000);
 	})
 }
 
