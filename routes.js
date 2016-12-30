@@ -10,8 +10,7 @@ var Routine = require('./models/routine');
         // authentication routes
 
         // sample api route
-        app.get('/routines', function(req, res) {
-            console.log("in routes.js");
+        app.get('/api/routines', function(req, res) {
             // use mongoose to get all routines in the database
             Routine.find(function(err, routines) {
 
@@ -27,7 +26,6 @@ var Routine = require('./models/routine');
         // route to handle creating goes here (app.post)
         app.post('/api/routines', function (req, res) {
 
-            console.log('request = ' + req);
             var routine = new Routine();
             routine.name = req.body.name;
             routine.hour = req.body.hour;
