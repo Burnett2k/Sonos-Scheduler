@@ -41,6 +41,17 @@ var Routine = require('./models/routine');
 
         });
 
+        app.delete('/api/routines/:routine_id', function(req, res) {
+            Routine.remove({
+                _id: req.params.routine_id}, function(err,bear) {
+                if (err)
+                    res.send(err);
+
+                res.json({ message: 'successfully deleted'});
+            });
+
+        });
+
 
         // route to handle delete goes here (app.delete)
 

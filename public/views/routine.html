@@ -17,7 +17,6 @@
     <h1> existing routines </h1>
     <p>{{ tagline }}</p>
 
-
 	<table class="table">
 	  <thead>
 	    <tr>
@@ -25,6 +24,7 @@
 	      <th>Name</th>
 	      <th>Time</th>
 	      <th>Day of Week</th>
+	      <th>Delete?</th>
 	    </tr>
 	  </thead>
 	  <tbody>
@@ -33,8 +33,8 @@
 	      <td>{{value.name}}</td>
 	      <td>{{value.hour}}:{{value.minute}}</td>
 	      <td>Not Finished</td>
+  		  <td><i class="fa fa-times ha-icon" ng-click="deleteRoutine(value)"></i></td>
 	    </tr>
   	  </tbody>
 	</table>
-
 </div>

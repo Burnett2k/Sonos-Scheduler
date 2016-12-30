@@ -6,6 +6,7 @@ angular.module('RoutineCtrl', []).controller('RoutineController', function($scop
     $scope.routines = [];
 
     Routine.get().then(function(res) {
+
     	$scope.routines = res.data;
     })
 
@@ -23,5 +24,10 @@ angular.module('RoutineCtrl', []).controller('RoutineController', function($scop
 		Routine.create(json).then(function(res) {
 	    	console.log("routine saved");
 	    })
+    };
+    $scope.deleteRoutine = function(routine) {
+        Routine.delete(routine._id).then(function(res) {
+            console.log("routine deleted");
+        })
     };
 });
