@@ -6,7 +6,6 @@ angular.module('RoutineCtrl', []).controller('RoutineController', function($scop
     $scope.routines = [];
 
     Routine.get().then(function(res) {
-    	console.log("routine controller");
     	$scope.routines = res.data;
     })
 

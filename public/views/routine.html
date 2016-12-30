@@ -1,6 +1,6 @@
 <!-- public/views/routine.html -->
 
-<div class="jumbotron text-center" ng-controller="RoutineController">
+<div class="jumbotron" ng-controller="RoutineController">
     <h1>create new routines</h1>
 
     <label style="padding-right:10px;">Name</label>
@@ -16,7 +16,25 @@
 
     <h1> existing routines </h1>
     <p>{{ tagline }}</p>
-    <div ng-repeat="value in routines">
-    	{{value}}
-    </div>
+
+
+	<table class="table">
+	  <thead>
+	    <tr>
+	      <th>#</th>
+	      <th>Name</th>
+	      <th>Time</th>
+	      <th>Day of Week</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+	    <tr ng-repeat="value in routines">
+	      <td scope="row">{{$index+1}}</th>
+	      <td>{{value.name}}</td>
+	      <td>{{value.hour}}:{{value.minute}}</td>
+	      <td>Not Finished</td>
+	    </tr>
+  	  </tbody>
+	</table>
+
 </div>
