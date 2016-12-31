@@ -6,7 +6,6 @@ angular.module('RoutineCtrl', []).controller('RoutineController', function($scop
     $scope.routines = [];
 
     Routine.get().then(function(res) {
-
     	$scope.routines = res.data;
     })
 
@@ -27,6 +26,8 @@ angular.module('RoutineCtrl', []).controller('RoutineController', function($scop
     };
     $scope.deleteRoutine = function(routine) {
         Routine.delete(routine._id).then(function(res) {
+            var index = $scope.routines.indexOf(routine);
+            $scope.routines.splice(index, 1);
             console.log("routine deleted");
         })
     };
