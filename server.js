@@ -56,6 +56,7 @@ var requestURL = darkSkyBaseURL + configuration.darksky + '/' +  configuration.l
 eveningRoutine();
 morningRoutine();
 
+
 function getWeather() {
 	//sending request to darksky api to get weather information
 	console.log("getting weather");
@@ -86,7 +87,7 @@ function getQotd() {
 			quoteOutput = JSON.parse(body);
 
 			//get first quote in array passed back
-			qotd = 'quote of the day is.                   .' + quoteOutput.contents.quotes[0].quote;
+			qotd = 'quote of the day is by: ' + quoteOutput.contents.quotes[0].author + ' ' + quoteOutput.contents.quotes[0].quote;
 			//qotd is giving me issues so i've commented out its usage for now.
 			fullweatherSpeech = sayCommand + qotd;
 			
@@ -128,7 +129,7 @@ function eveningRoutine() {
 function morningRoutine() {
 	var morningRule = new schedule.RecurrenceRule();
 	morningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
-	morningRule.minute = 15;
+	morningRule.minute = 10;
 	morningRule.hour = 6;
 	var morningRuleName = 'morning';
 	console.log("creating morning routine");
