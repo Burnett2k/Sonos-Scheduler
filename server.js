@@ -109,11 +109,11 @@ function eveningRoutine() {
 	console.log("creating evening routine");
 	 
 	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
-		request({url: 'http://192.168.1.2/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":100}}, function(error, response, body) {
+		request({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":100}}, function(error, response, body) {
 			handleResponse(error, response, body);
 		})
 		console.log("we hit the timer!!!");
-		request('http://localhost:5005/master%20room/say/good evening sawyer. I hope you had a good day today!', function (error, response, body) {
+		request('http://localhost:5005/master%20room/say/good evening sawyer. I hope you had a good day today! Please try and read a book or reflect on the day before bed', function (error, response, body) {
 		 	handleResponse(error, response, body);
 		})
 		request('http://localhost:5005/master%20room/favorite/sleep', function (error, response, body) {
@@ -135,7 +135,7 @@ function morningRoutine() {
 	 
 	var morningRoutine = schedule.scheduleJob(morningRuleName, morningRule, function() {
 		console.log("we hit the timer!!!");
-		request({url: 'http://192.168.1.2/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":254}}, function(error, response, body) {
+		request({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":254}}, function(error, response, body) {
 			handleResponse(error, response, body);
 		})
 

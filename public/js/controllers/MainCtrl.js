@@ -49,7 +49,7 @@ myApp.controller('MainController', ['$scope', '$http', function($scope, $http) {
 	$scope.searchMusic = function(musicSearchText) {
 		console.log("searching for songs by " + musicSearchText);
 		if (musicSearchText) {
-			$http.get('http://localhost:5005/master%20room/musicsearch/spotify/song/' + musicSearchText).
+			$http.get('http://localhost:5005/master%20room/musicsearch/spotify/song/artist:' + musicSearchText).
 	       	then(function (response) { 
 	       		$scope.sonosResult = response.data.status;
 	        }, function (response) {
