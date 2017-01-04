@@ -49,54 +49,8 @@ var month = currentDate.getMonth();
 var day = currentDate.getDate();
 var currentDateUNIX = new Date(year, month, day).getTime() / 1000;
 
-
-
-var requestURL = darkSkyBaseURL + configuration.darksky + '/' +  configuration.latitude + ',' + configuration.longitude + darkSkyQueryString;
-
 eveningRoutine();
 morningRoutine();
-
-
-function getWeather() {
-	//sending request to darksky api to get weather information
-	console.log("getting weather");
-	request(requestURL, function (error, response, body) {
-		if (handleResponse(error, response, body)) {
-			weatherOutput = JSON.parse(body);
-			var daily = weatherOutput.daily.data;
-			console.log(daily);
-			for (var i = 0; i < daily.length; i++) {
-				if (daily[i].time === currentDateUNIX) {
-		    		currentWeather = 'Current weather is ' + weatherOutput.currently.summary + '. Weekly weather is ' + weatherOutput.daily.summary + '. Temperature is ' + weatherOutput.currently.temperature + '. Precipitation chance is ' + weatherOutput.currently.precipProbability + '.';
-					dailyForecast = "The daily Forecast is " + daily[i].summary;
-				}
-			}
-
-			request(sayCommand + currentWeather + ' ' + dailyForecast, function (error, response, body) {
-				handleResponse(error, response, body);
-			})
-	  	}	
-	})
-}
-
-function getQotd() {
-	//sending request to get a daily quote
-	console.log("getting qotd");
-	request(dailyQuoteBaseURL, function (error, response, body) {
-		if (handleResponse(error, response, body)) {
-			quoteOutput = JSON.parse(body);
-
-			//get first quote in array passed back
-			qotd = 'quote of the day is by: ' + quoteOutput.contents.quotes[0].author + ' ' + quoteOutput.contents.quotes[0].quote;
-			//qotd is giving me issues so i've commented out its usage for now.
-			fullweatherSpeech = sayCommand + qotd;
-			
-			request(fullweatherSpeech, function (error, response, body) {
-				handleResponse(error, response, body);
-			})
-		}
-	})
-}
 
 function eveningRoutine() {
 	//evening routine
@@ -129,7 +83,7 @@ function eveningRoutine() {
 function morningRoutine() {
 	var morningRule = new schedule.RecurrenceRule();
 	morningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
-	morningRule.minute = 10;
+	morningRule.minute = 52;
 	morningRule.hour = 6;
 	var morningRuleName = 'morning';
 	console.log("creating morning routine");
@@ -170,6 +124,52 @@ function playStarred() {
 	request('http://localhost:5005/master%20room/favorite/starred', function (error, response, body) {
 			handleResponse(error, response, body);
 		})
+}
+
+function getWeather() {
+	var requestURL = darkSkyBaseURL + configuration.darksky + '/' +  configuration.latitude + ',' + configuration.longitude + darkSkyQueryString;
+	//sending request to darksky api to get weather information
+	console.log("getting weather");
+	console.log("Hitting API for weather: " + requestURL);
+	console.log("current UNIX time " + currentDateUNIX);
+	request(requestURL, function (error, response, body) {
+		if (handleResponse(error, response, body)) {
+			weatherOutput = JSON.parse(body);
+			var daily = weatherOutput.daily.data;
+			
+			for (var i = 0; i < daily.length; i++) {
+				if (daily[i].time === currentDateUNIX) {
+		    		currentWeather = 'Current weather is ' + weatherOutput.currently.summary + '. Weekly weather is ' + weatherOutput.daily.summary + '. Temperature is ' + weatherOutput.currently.temperature + '. Precipitation chance is ' + weatherOutput.currently.precipProbability + '.';
+					dailyForecast = "The daily Forecast is " + daily[i].summary;
+				}
+			}
+
+			request(sayCommand + currentWeather + ' ' + dailyForecast, function (error, response, body) {
+				handleResponse(error, response, body);
+			})
+	  	}	
+	})
+}
+
+function getQotd() {
+	//sending request to get a daily quote
+	console.log("getting qotd");
+	console.log("Hitting PI for qotd: " + dailyQuoteBaseURL);
+	request(dailyQuoteBaseURL, function (error, response, body) {
+
+		if (handleResponse(error, response, body)) {
+			quoteOutput = JSON.parse(body);
+
+			//get first quote in array passed back
+			qotd = 'quote of the day is by: ' + quoteOutput.contents.quotes[0].author + '. It is: ' + quoteOutput.contents.quotes[0].quote;
+			//qotd is giving me issues so i've commented out its usage for now.
+			fullweatherSpeech = sayCommand + qotd;
+			
+			request(fullweatherSpeech, function (error, response, body) {
+				handleResponse(error, response, body);
+			})
+		}
+	})
 }
 
 //var jobs = schedule.scheduledJobs;
