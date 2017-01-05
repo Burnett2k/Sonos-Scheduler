@@ -100,7 +100,7 @@ function morningRoutine() {
 
 		setTimeout(playStarred, 40000);
 		setTimeout(setShuffle.bind(null, 'on'), 60000);
-		setTimeout(setVolume.bind(null, 35), 62000);
+		setTimeout(setVolume.bind(null, 20), 62000);
 	})
 }
 
