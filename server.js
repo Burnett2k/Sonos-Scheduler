@@ -74,16 +74,15 @@ function eveningRoutine() {
 		request('http://localhost:5005/master%20room/favorite/sleep', function (error, response, body) {
 		  	handleResponse(error, response, body);
 		})
-		request('http://localhost:5005/master%20room/volume/15', function (error, response, body) {
-		 	handleResponse(error, response, body);
-		})
+		setTimeout(setShuffle.bind(null, 'on'), 1000);
+		setTimeout(setVolume.bind(null, 35), 2000);
 	})
 }
 
 function morningRoutine() {
 	var morningRule = new schedule.RecurrenceRule();
 	morningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
-	morningRule.minute = 52;
+	morningRule.minute = 00;
 	morningRule.hour = 6;
 	var morningRuleName = 'morning';
 	console.log("creating morning routine");
@@ -110,12 +109,12 @@ function morningGreeting() {
 			handleResponse(error, response, body);
 		})
 }
-function setShuffle(setting) {
+function setShuffle(a, setting) {
 	request('http://localhost:5005/master%20room/shuffle/' + setting, function (error, response, body) {
 			handleResponse(error, response, body);
 		})
 }
-function setVolume(setting) {
+function setVolume(a, setting) {
 	request('http://localhost:5005/master%20room/volume/' + setting, function (error, response, body) {
 	  		handleResponse(error, response, body);
 		})
