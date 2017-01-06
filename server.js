@@ -75,7 +75,7 @@ function eveningRoutine() {
 		  	handleResponse(error, response, body);
 		})
 		setTimeout(setShuffle.bind(null, 'on'), 1000);
-		setTimeout(setVolume.bind(null, 35), 2000);
+		setTimeout(setVolume.bind(null, 15), 2000);
 	})
 }
 
@@ -109,12 +109,12 @@ function morningGreeting() {
 			handleResponse(error, response, body);
 		})
 }
-function setShuffle(a, setting) {
+function setShuffle(setting) {
 	request('http://localhost:5005/master%20room/shuffle/' + setting, function (error, response, body) {
 			handleResponse(error, response, body);
 		})
 }
-function setVolume(a, setting) {
+function setVolume(setting) {
 	request('http://localhost:5005/master%20room/volume/' + setting, function (error, response, body) {
 	  		handleResponse(error, response, body);
 		})
