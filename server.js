@@ -87,7 +87,7 @@ function frontPorchLightOnRoutine() {
 	console.log("turning on porch light");
 	 
 	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
-		request({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":200}}, function(error, response, body) {
+		request({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/2/state/', method: 'PUT', json: {"on":true, "bri":200}}, function(error, response, body) {
 			handleResponse(error, response, body);
 		})
 		
