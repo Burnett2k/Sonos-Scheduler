@@ -57,6 +57,17 @@ myApp.controller('MainController', ['$scope', '$http', function($scope, $http) {
 	        });
        }
 	};
+	$scope.searchMusicRadio = function(radioText) {
+		console.log("searching for songs by " + radioText);
+		if (radioText) {
+			$http.get('http://localhost:5005/master%20room/musicsearch/spotify/station/artist:' + radioText).
+	       	then(function (response) { 
+	       		$scope.sonosResult = response.data.status;
+	        }, function (response) {
+	       		$scope.sonosResult = 'error';
+	        });
+       }
+	};
 	$scope.increaseVolume = function() {
 		adjustVolume('+5');
 	};

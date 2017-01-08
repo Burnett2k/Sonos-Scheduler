@@ -60,7 +60,6 @@ function eveningRoutine() {
 	eveningRule.minute = 30;
 	eveningRule.hour = 21;
 	var eveningRuleName = 'eveningRoutine';
-	console.log("creating evening routine");
 	 
 	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
 		request({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":100}}, function(error, response, body) {
@@ -84,13 +83,13 @@ function frontPorchLightOnRoutine() {
 	eveningRule.minute = 30;
 	eveningRule.hour = 18;
 	var eveningRuleName = 'frontPorchLightOnRoutine';
-	console.log("turning on porch light");
+
 	 
 	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
 		request({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/2/state/', method: 'PUT', json: {"on":true, "bri":200}}, function(error, response, body) {
 			handleResponse(error, response, body);
+				console.log("turning on porch light");
 		})
-		
 	})
 }
 
@@ -100,13 +99,13 @@ function frontPorchLightOffRoutine() {
 	eveningRule.minute = 30;
 	eveningRule.hour = 4;
 	var eveningRuleName = 'frontPorchLightOffRoutine';
-	console.log("turning off porch light");
+
 	 
 	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
 		request({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/2/state/', method: 'PUT', json: {"on":false}}, function(error, response, body) {
 			handleResponse(error, response, body);
+			console.log("turning off porch light");
 		})
-		console.log("we hit the timer!!!");
 	})
 }
 
@@ -116,7 +115,6 @@ function morningRoutine() {
 	morningRule.minute = 00;
 	morningRule.hour = 6;
 	var morningRuleName = 'morningRoutine';
-	console.log("creating morning routine");
 	 
 	var morningRoutine = schedule.scheduleJob(morningRuleName, morningRule, function() {
 		console.log("we hit the timer!!!");
