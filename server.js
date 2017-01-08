@@ -73,9 +73,8 @@ function eveningRoutine() {
 		request('http://localhost:5005/master%20room/favorite/sleep', function (error, response, body) {
 		  	handleResponse(error, response, body);
 		})
-		request('http://localhost:5005/master%20room/volume/15', function (error, response, body) {
-		 	handleResponse(error, response, body);
-		})
+		setTimeout(setShuffle.bind(null, 'on'), 1000);
+		setTimeout(setVolume.bind(null, 15), 2000);
 	})
 }
 
@@ -114,7 +113,7 @@ function frontPorchLightOffRoutine() {
 function morningRoutine() {
 	var morningRule = new schedule.RecurrenceRule();
 	morningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
-	morningRule.minute = 52;
+	morningRule.minute = 00;
 	morningRule.hour = 6;
 	var morningRuleName = 'morningRoutine';
 	console.log("creating morning routine");
@@ -132,7 +131,7 @@ function morningRoutine() {
 
 		setTimeout(playStarred, 40000);
 		setTimeout(setShuffle.bind(null, 'on'), 60000);
-		setTimeout(setVolume.bind(null, 35), 62000);
+		setTimeout(setVolume.bind(null, 20), 62000);
 	})
 }
 
