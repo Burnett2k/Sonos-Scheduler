@@ -51,16 +51,15 @@ var currentDateUNIX = new Date(year, month, day).getTime() / 1000;
 
 eveningRoutine();
 morningRoutine();
+frontPorchLightOnRoutine();
+frontPorchLightOffRoutine();
 
 function eveningRoutine() {
-	//evening routine
-	//1. Say it is time to start getting ready for bed
-	//2. Put on some good music
 	var eveningRule = new schedule.RecurrenceRule();
 	eveningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
 	eveningRule.minute = 30;
 	eveningRule.hour = 21;
-	var eveningRuleName = 'evening';
+	var eveningRuleName = 'eveningRoutine';
 	console.log("creating evening routine");
 	 
 	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
@@ -80,12 +79,44 @@ function eveningRoutine() {
 	})
 }
 
+function frontPorchLightOnRoutine() {
+	var eveningRule = new schedule.RecurrenceRule();
+	eveningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
+	eveningRule.minute = 30;
+	eveningRule.hour = 18;
+	var eveningRuleName = 'frontPorchLightOnRoutine';
+	console.log("turning on porch light");
+	 
+	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
+		request({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":200}}, function(error, response, body) {
+			handleResponse(error, response, body);
+		})
+		
+	})
+}
+
+function frontPorchLightOffRoutine() {
+	var eveningRule = new schedule.RecurrenceRule();
+	eveningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
+	eveningRule.minute = 30;
+	eveningRule.hour = 4;
+	var eveningRuleName = 'frontPorchLightOffRoutine';
+	console.log("turning off porch light");
+	 
+	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
+		request({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/2/state/', method: 'PUT', json: {"on":false}}, function(error, response, body) {
+			handleResponse(error, response, body);
+		})
+		console.log("we hit the timer!!!");
+	})
+}
+
 function morningRoutine() {
 	var morningRule = new schedule.RecurrenceRule();
 	morningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
 	morningRule.minute = 52;
 	morningRule.hour = 6;
-	var morningRuleName = 'morning';
+	var morningRuleName = 'morningRoutine';
 	console.log("creating morning routine");
 	 
 	var morningRoutine = schedule.scheduleJob(morningRuleName, morningRule, function() {
