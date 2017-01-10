@@ -5,8 +5,8 @@ var schedule = require('node-schedule');
 var fs = require('fs');
 var express = require('express');
 var app = express();
-var db  = require('mongoose');
-var bodyParser     = require('body-parser');
+var db = require('mongoose');
+var bodyParser = require('body-parser');
 
 //bodyparser stuff
 app.use(bodyParser.json()); 
@@ -54,6 +54,46 @@ morningRoutine();
 frontPorchLightOnRoutine();
 frontPorchLightOffRoutine();
 
+app.post('/createRoutine', function (req, res, next) {
+
+	newRoutine(req);
+	console.log("made it past!");
+		res.sendStatus(200);
+	
+});
+
+function newRoutine(req) {
+	console.log("adding routine to scheduler");
+	var newRule = new schedule.RecurrenceRule();
+	//todo update to 
+	newRule.dayOfWeek = [0, new schedule.Range(0, 6)];
+	newRule.minute = req.body.minute;
+	newRule.hour = req.body.hour;
+	var newRuleName = req.body.name;
+	console.log('minute ' + req.body.minute);
+	console.log('hour ' + req.body.hour);
+	console.log('name ' + req.body.name);
+
+	// var eveningRoutine = schedule.scheduleJob(newRuleName, newRule, function() {
+	// // 	//todo update to take a text parameter or something
+
+	// 	request('http://localhost:5005/master%20room/say/good evening sawyer. I hope you had a good day today! Please try and read a book or reflect on the day before bed', function (error, response, body) {
+	// 	 	handleResponse(error, response, body);
+	// 	 	console.log("timer was hit");
+	// 	})
+	// });
+
+	// console.log("made it past");
+	// var jobs = schedule.scheduledJobs;
+	// console.log(schedule);
+	// for(var i in jobs)
+	// {
+	// 	console.log(jobs[i].name);
+	// 	console.log(jobs[i].nextInvocation());
+	// }
+
+}
+
 function eveningRoutine() {
 	var eveningRule = new schedule.RecurrenceRule();
 	eveningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
@@ -62,9 +102,7 @@ function eveningRoutine() {
 	var eveningRuleName = 'eveningRoutine';
 	 
 	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
-		request({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":100}}, function(error, response, body) {
-			handleResponse(error, response, body);
-		})
+		setLights({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":100}});
 		console.log("we hit the timer!!!");
 		request('http://localhost:5005/master%20room/say/good evening sawyer. I hope you had a good day today! Please try and read a book or reflect on the day before bed', function (error, response, body) {
 		 	handleResponse(error, response, body);
@@ -83,13 +121,8 @@ function frontPorchLightOnRoutine() {
 	eveningRule.minute = 30;
 	eveningRule.hour = 18;
 	var eveningRuleName = 'frontPorchLightOnRoutine';
-
-	 
 	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
-		request({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/2/state/', method: 'PUT', json: {"on":true, "bri":200}}, function(error, response, body) {
-			handleResponse(error, response, body);
-				console.log("turning on porch light");
-		})
+		setLights({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/2/state/', method: 'PUT', json: {"on":true, "bri":200}});
 	})
 }
 
@@ -99,14 +132,9 @@ function frontPorchLightOffRoutine() {
 	eveningRule.minute = 30;
 	eveningRule.hour = 4;
 	var eveningRuleName = 'frontPorchLightOffRoutine';
-
-	 
 	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
-		request({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/2/state/', method: 'PUT', json: {"on":false}}, function(error, response, body) {
-			handleResponse(error, response, body);
-			console.log("turning off porch light");
-		})
-	})
+		setLights({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/2/state/', method: 'PUT', json: {"on":false}});
+	})	
 }
 
 function morningRoutine() {
@@ -115,44 +143,64 @@ function morningRoutine() {
 	morningRule.minute = 00;
 	morningRule.hour = 6;
 	var morningRuleName = 'morningRoutine';
-	 
 	var morningRoutine = schedule.scheduleJob(morningRuleName, morningRule, function() {
 		console.log("we hit the timer!!!");
-		request({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":254}}, function(error, response, body) {
-			handleResponse(error, response, body);
-		})
+		setLights({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":254}});
+
+		setShuffle('on');
+		setVolume(20);
+		setTimeout(playStarred);
 
 		morningGreeting();
 
 		setTimeout(getWeather, 10000);
-		setTimeout(getQotd, 30000);
-
-		setTimeout(playStarred, 40000);
-		setTimeout(setShuffle.bind(null, 'on'), 60000);
-		setTimeout(setVolume.bind(null, 20), 62000);
+		setTimeout(getQotd, 40000);
 	})
 }
 
 function morningGreeting() {
 	request('http://localhost:5005/master%20room/say/good morning sawyer. Please make sure to have a good day today!', function (error, response, body) {
-			handleResponse(error, response, body);
+			if (handleResponse(error, response, body)) {
+				console.log("successfully sent morning Greeting");	
+			}
 		})
 }
 function setShuffle(setting) {
 	request('http://localhost:5005/master%20room/shuffle/' + setting, function (error, response, body) {
-			handleResponse(error, response, body);
+			if (handleResponse(error, response, body)) {
+				console.log("successfully set shuffle");		
+			}
 		})
 }
 function setVolume(setting) {
 	request('http://localhost:5005/master%20room/volume/' + setting, function (error, response, body) {
-	  		handleResponse(error, response, body);
+	  		if (handleResponse(error, response, body)) {
+				console.log("successfully set volume to " + setting + ' on sonos');		
+			}
 		})
 }
 function playStarred() {
 	request('http://localhost:5005/master%20room/favorite/starred', function (error, response, body) {
-			handleResponse(error, response, body);
+			if (handleResponse(error, response, body)) {
+				console.log("successfully started starrred playlist on sonos");
+			}
 		})
 }
+function textToSpeech(text) {
+	request(sayCommand + text, function (error, response, body) {
+		if (handleResponse(error, response, body)) {
+			console.log("successfully sent text to sonos");
+		}
+	})
+}
+function setLights(settings) {
+	request(settings, function(error, response, body) {
+		if (handleResponse(error, response, body)) {
+			console.log('successfully set lights');
+		}
+	})
+}	
+
 
 function getWeather() {
 	var requestURL = darkSkyBaseURL + configuration.darksky + '/' +  configuration.latitude + ',' + configuration.longitude + darkSkyQueryString;
@@ -171,10 +219,7 @@ function getWeather() {
 					dailyForecast = "The daily Forecast is " + daily[i].summary;
 				}
 			}
-
-			request(sayCommand + currentWeather + ' ' + dailyForecast, function (error, response, body) {
-				handleResponse(error, response, body);
-			})
+			textToSpeech(currentWeather + ' ' + dailyForecast);
 	  	}	
 	})
 }
@@ -209,6 +254,7 @@ function getQotd() {
 // }
 
 app.listen(PORT);
+
 
 function handleResponse(error, response, body) {
   if (!error && response.statusCode == 200 && logging) {
