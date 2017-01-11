@@ -97,21 +97,19 @@ function newRoutine(req) {
 function eveningRoutine() {
 	var eveningRule = new schedule.RecurrenceRule();
 	eveningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
-	eveningRule.minute = 38;
+	eveningRule.minute = 45;
 	eveningRule.hour = 21;
 	var eveningRuleName = 'eveningRoutine';
 	 
 	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
 		console.log("evening routine starting");
-		setShuffle('on');
-		setVolume(15);
 		setLights({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":100}});
-		request('http://localhost:5005/master%20room/say/good evening sawyer. I hope you had a good day today! Please try and read a book or reflect on the day before bed', function (error, response, body) {
-		 	handleResponse(error, response, body);
-		})
 		request('http://localhost:5005/master%20room/favorite/sleep', function (error, response, body) {
 		  	handleResponse(error, response, body);
 		})
+		setShuffle('on');
+		setVolume(15);
+		setTimeout(eveningGreeting, 10000);
 	})
 }
 
@@ -146,11 +144,9 @@ function morningRoutine() {
 	var morningRoutine = schedule.scheduleJob(morningRuleName, morningRule, function() {
 		console.log("morning routine starting");
 		setLights({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":254}});
-
+		setTimeout(playStarred);
 		setShuffle('on');
 		setVolume(20);
-		setTimeout(playStarred);
-
 		morningGreeting();
 
 		setTimeout(getWeather, 10000);
@@ -160,6 +156,13 @@ function morningRoutine() {
 
 function morningGreeting() {
 	request('http://localhost:5005/master%20room/say/good morning sawyer. Please make sure to have a good day today!', function (error, response, body) {
+			if (handleResponse(error, response, body)) {
+				console.log("successfully sent morning Greeting");	
+			}
+		})
+}
+function eveningGreeting() {
+	request('http://localhost:5005/master%20room/say/good evening sawyer. I hope you had a good day today! Please try and read a book or reflect on the day before bed', function (error, response, body) {
 			if (handleResponse(error, response, body)) {
 				console.log("successfully sent morning Greeting");	
 			}
