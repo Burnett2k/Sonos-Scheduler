@@ -97,21 +97,21 @@ function newRoutine(req) {
 function eveningRoutine() {
 	var eveningRule = new schedule.RecurrenceRule();
 	eveningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
-	eveningRule.minute = 30;
+	eveningRule.minute = 38;
 	eveningRule.hour = 21;
 	var eveningRuleName = 'eveningRoutine';
 	 
 	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
+		console.log("evening routine starting");
+		setShuffle('on');
+		setVolume(15);
 		setLights({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":100}});
-		console.log("we hit the timer!!!");
 		request('http://localhost:5005/master%20room/say/good evening sawyer. I hope you had a good day today! Please try and read a book or reflect on the day before bed', function (error, response, body) {
 		 	handleResponse(error, response, body);
 		})
 		request('http://localhost:5005/master%20room/favorite/sleep', function (error, response, body) {
 		  	handleResponse(error, response, body);
 		})
-		setTimeout(setShuffle.bind(null, 'on'), 1000);
-		setTimeout(setVolume.bind(null, 15), 2000);
 	})
 }
 
@@ -144,7 +144,7 @@ function morningRoutine() {
 	morningRule.hour = 6;
 	var morningRuleName = 'morningRoutine';
 	var morningRoutine = schedule.scheduleJob(morningRuleName, morningRule, function() {
-		console.log("we hit the timer!!!");
+		console.log("morning routine starting");
 		setLights({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":254}});
 
 		setShuffle('on');
