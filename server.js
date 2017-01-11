@@ -104,9 +104,7 @@ function eveningRoutine() {
 	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
 		console.log("evening routine starting");
 		setLights({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":100}});
-		request('http://localhost:5005/master%20room/favorite/sleep', function (error, response, body) {
-		  	handleResponse(error, response, body);
-		})
+		playFavorite('sleep');
 		setShuffle('on');
 		setVolume(15);
 		setTimeout(eveningGreeting, 10000);
@@ -120,6 +118,7 @@ function frontPorchLightOnRoutine() {
 	eveningRule.hour = 18;
 	var eveningRuleName = 'frontPorchLightOnRoutine';
 	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
+		console.log("turning on front porch light");
 		setLights({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/2/state/', method: 'PUT', json: {"on":true, "bri":200}});
 	})
 }
@@ -131,6 +130,7 @@ function frontPorchLightOffRoutine() {
 	eveningRule.hour = 4;
 	var eveningRuleName = 'frontPorchLightOffRoutine';
 	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
+		console.log("turning off front porch light");
 		setLights({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/2/state/', method: 'PUT', json: {"on":false}});
 	})	
 }
@@ -144,7 +144,7 @@ function morningRoutine() {
 	var morningRoutine = schedule.scheduleJob(morningRuleName, morningRule, function() {
 		console.log("morning routine starting");
 		setLights({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":254}});
-		setTimeout(playStarred);
+		playFavorite('starred');
 		setShuffle('on');
 		setVolume(20);
 		morningGreeting();
@@ -182,10 +182,10 @@ function setVolume(setting) {
 			}
 		})
 }
-function playStarred() {
-	request('http://localhost:5005/master%20room/favorite/starred', function (error, response, body) {
+function playFavorite(playlist) {
+	request('http://localhost:5005/master%20room/favorite/' + playlist, function (error, response, body) {
 			if (handleResponse(error, response, body)) {
-				console.log("successfully started starrred playlist on sonos");
+				console.log("successfully started " + playlist + " playlist.");
 			}
 		})
 }
