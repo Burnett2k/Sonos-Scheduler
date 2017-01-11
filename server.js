@@ -149,8 +149,8 @@ function morningRoutine() {
 		setVolume(20);
 		morningGreeting();
 
-		setTimeout(getWeather, 10000);
-		setTimeout(getQotd, 40000);
+		setTimeout(getWeather, 20000);
+		setTimeout(getQotd, 60000);
 	})
 }
 
@@ -220,9 +220,11 @@ function getWeather() {
 				if (daily[i].time === currentDateUNIX) {
 		    		currentWeather = 'Current weather is ' + weatherOutput.currently.summary + '. Weekly weather is ' + weatherOutput.daily.summary + '. Temperature is ' + weatherOutput.currently.temperature + '. Precipitation chance is ' + weatherOutput.currently.precipProbability + '.';
 					dailyForecast = "The daily Forecast is " + daily[i].summary;
+					textToSpeech(currentWeather + ' ' + dailyForecast);
+					break;
 				}
 			}
-			textToSpeech(currentWeather + ' ' + dailyForecast);
+
 	  	}	
 	})
 }
