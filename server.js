@@ -81,7 +81,7 @@ function newRoutine(req) {
 function eveningRoutine() {
 	var eveningRule = new schedule.RecurrenceRule();
 	eveningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
-	eveningRule.minute = 45;
+	eveningRule.minute = 30;
 	eveningRule.hour = 21;
 	var eveningRuleName = 'eveningRoutine';
 	 
@@ -146,7 +146,7 @@ function morningGreeting() {
 		})
 }
 function eveningGreeting() {
-	request('http://localhost:5005/master%20room/say/good evening sawyer. I hope you had a good day today! Please try and read a book or reflect on the day before bed', function (error, response, body) {
+	request('http://localhost:5005/master%20room/say/good evening sawyer. I hope you had a good day today! Dont forget to finish your five minute journal and reflect on the days accomplishments', function (error, response, body) {
 			if (handleResponse(error, response, body)) {
 				console.log("successfully sent morning Greeting");	
 			}
