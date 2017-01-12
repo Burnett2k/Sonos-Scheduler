@@ -7,8 +7,6 @@ angular.module('RoutineService', []).factory('Routine', ['$http', function($http
             return $http.get('/api/routines');
         },
 
-
-        // these will work when more API routes are defined on the Node side of things
         // call to POST and create a new routines
         create : function(routineData) {
             return $http.post('/api/routines', routineData);

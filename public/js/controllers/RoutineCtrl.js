@@ -1,5 +1,7 @@
 // public/js/controllers/RoutineCtrl.js
-angular.module('RoutineCtrl', []).controller('RoutineController', function($scope, Routine) {
+var myModule = angular.module('RoutineCtrl', []);
+
+myModule.controller('RoutineController', ['$scope', '$http', 'Routine', function($scope, $http, Routine) {
 
     $scope.tagline = 'Nothing beats a pocket protector!';
 
@@ -18,11 +20,21 @@ angular.module('RoutineCtrl', []).controller('RoutineController', function($scop
     		"minute": $scope.newRoutineMinute,
     		"dayOfWeek": routineArray
     	};
+
+        //console.log(json);
+        Routine.create(json).then(function(res) {
+            console.log("routine saved");
+        });
+        
+        $http.post('/createRoutine', JSON.stringify(json))
+        .then(function() {
+            console.log("success");
+        })   // success
+        .catch(function() {
+            console.log("error");
+        }); // error
     	
-    	console.log(json);
-		Routine.create(json).then(function(res) {
-	    	console.log("routine saved");
-	    })
+
     };
     $scope.deleteRoutine = function(routine) {
         Routine.delete(routine._id).then(function(res) {
@@ -31,4 +43,4 @@ angular.module('RoutineCtrl', []).controller('RoutineController', function($scop
             console.log("routine deleted");
         })
     };
-});
+}]);

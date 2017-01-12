@@ -36,7 +36,7 @@ var Routine = require('./models/routine');
             routine.save(function(err, routine) {
                 if (err) return console.error(err);//res.send(err);
 
-                //res.json({ message: 'routine created!'});
+                res.json({ message: 'routine created!'});
             });
 
         });

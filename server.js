@@ -54,44 +54,28 @@ morningRoutine();
 frontPorchLightOnRoutine();
 frontPorchLightOffRoutine();
 
-app.post('/createRoutine', function (req, res, next) {
-
-	newRoutine(req);
-	console.log("made it past!");
-		res.sendStatus(200);
-	
+app.post('/createRoutine', function (req, res) {
+	newRoutine(req, res);
+	res.sendStatus(200);
 });
 
 function newRoutine(req) {
 	console.log("adding routine to scheduler");
 	var newRule = new schedule.RecurrenceRule();
+	var newRuleName = req.body.name;
+
 	//todo update to 
 	newRule.dayOfWeek = [0, new schedule.Range(0, 6)];
 	newRule.minute = req.body.minute;
 	newRule.hour = req.body.hour;
-	var newRuleName = req.body.name;
-	console.log('minute ' + req.body.minute);
-	console.log('hour ' + req.body.hour);
-	console.log('name ' + req.body.name);
-
-	// var eveningRoutine = schedule.scheduleJob(newRuleName, newRule, function() {
-	// // 	//todo update to take a text parameter or something
-
-	// 	request('http://localhost:5005/master%20room/say/good evening sawyer. I hope you had a good day today! Please try and read a book or reflect on the day before bed', function (error, response, body) {
-	// 	 	handleResponse(error, response, body);
-	// 	 	console.log("timer was hit");
-	// 	})
-	// });
-
-	// console.log("made it past");
-	// var jobs = schedule.scheduledJobs;
-	// console.log(schedule);
-	// for(var i in jobs)
-	// {
-	// 	console.log(jobs[i].name);
-	// 	console.log(jobs[i].nextInvocation());
-	// }
-
+	
+	schedule.scheduleJob(newRule, function() {
+		//todo update to take a text parameter or something
+		request('http://localhost:5005/master%20room/say/good evening sawyer. I hope you had a good day today! Please try and read a book or reflect on the day before bed', function (error, response, body) {
+		 	handleResponse(error, response, body);
+		 	console.log("timer was hit");
+		})
+	});
 }
 
 function eveningRoutine() {
