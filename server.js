@@ -202,6 +202,8 @@ function getWeather() {
 			
 			for (var i = 0; i < daily.length; i++) {
 				if (daily[i].time === currentDateUNIX) {
+					console.log("found the proper daily routine");
+					console.log(' daily weather ' + weatherOutput.daily);
 		    		currentWeather = 'Current weather is ' + weatherOutput.currently.summary + '. Weekly weather is ' + weatherOutput.daily.summary + '. Temperature is ' + weatherOutput.currently.temperature + '. Precipitation chance is ' + weatherOutput.currently.precipProbability + '.';
 					dailyForecast = "The daily Forecast is " + daily[i].summary;
 					textToSpeech(currentWeather + ' ' + dailyForecast);
