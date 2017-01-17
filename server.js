@@ -87,7 +87,7 @@ function eveningRoutine() {
 	 
 	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
 		console.log("evening routine starting");
-		setLights({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":100}});
+		setLights({url: 'http://192.168.1.2/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":100}});
 		playFavorite('sleep');
 		setShuffle('on');
 		setVolume(15);
@@ -103,7 +103,7 @@ function frontPorchLightOnRoutine() {
 	var eveningRuleName = 'frontPorchLightOnRoutine';
 	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
 		console.log("turning on front porch light");
-		setLights({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/2/state/', method: 'PUT', json: {"on":true, "bri":200}});
+		setLights({url: 'http://192.168.1.2/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/2/state/', method: 'PUT', json: {"on":true, "bri":200}});
 	})
 }
 
@@ -115,7 +115,7 @@ function frontPorchLightOffRoutine() {
 	var eveningRuleName = 'frontPorchLightOffRoutine';
 	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
 		console.log("turning off front porch light");
-		setLights({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/2/state/', method: 'PUT', json: {"on":false}});
+		setLights({url: 'http://192.168.1.2/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/2/state/', method: 'PUT', json: {"on":false}});
 	})	
 }
 
@@ -127,7 +127,7 @@ function morningRoutine() {
 	var morningRuleName = 'morningRoutine';
 	var morningRoutine = schedule.scheduleJob(morningRuleName, morningRule, function() {
 		console.log("morning routine starting");
-		setLights({url: 'http://192.168.1.4/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":254}});
+		setLights({url: 'http://192.168.1.2/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":254}});
 		playFavorite('starred');
 		setShuffle('on');
 		setVolume(20);
