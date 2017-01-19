@@ -5,8 +5,9 @@ var schedule = require('node-schedule');
 var fs = require('fs');
 var express = require('express');
 var app = express();
-var db = require('mongoose');
+var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
+var Routine = require('./models/routine');
 
 //bodyparser stuff
 app.use(bodyParser.json()); 
@@ -31,8 +32,8 @@ var configuration = JSON.parse(
 	fs.readFileSync(settings)
 );
 
-db.Promise = global.Promise;
-db.connect(configuration.mongoUrl);
+mongoose.Promise = global.Promise;
+mongoose.connect(configuration.mongoUrl);
 
 //misc variables
 var weatherOutput;
@@ -53,6 +54,7 @@ eveningRoutine();
 morningRoutine();
 frontPorchLightOnRoutine();
 frontPorchLightOffRoutine();
+addRoutinesFromDB();
 
 app.post('/createRoutine', function (req, res) {
 	newRoutine(req, res);
@@ -78,6 +80,7 @@ function newRoutine(req) {
 		})
 	});
 }
+
 
 function eveningRoutine() {
 	var eveningRule = new schedule.RecurrenceRule();
@@ -237,16 +240,29 @@ function getQotd() {
 	})
 }
 
-//var jobs = schedule.scheduledJobs;
-//console.log(schedule);
-// for(var i in jobs)
-// {
-// 	console.log(jobs[i].name);
-// 	console.log(jobs[i].nextInvocation());
-// }
+function addRoutinesFromDB() {
+	Routine.find(function(err, routines) {
+
+        if (err) {
+            res.send(err);
+        } else {
+    	    for (var i = 0; i < routines.length;i++) {
+        		//todo convert this to a more generic method that can be used by newRoutine(req);
+        		var newRule = new schedule.RecurrenceRule();
+				newRule.dayOfWeek = [0, new schedule.Range(0, 6)];
+				newRule.minute = routines[i].minute;
+				newRule.hour = routines[i].hour;
+				var message = routines[i].message;
+
+				schedule.scheduleJob(routines[i].name, newRule, function(message) {
+					textToSpeech(message);
+				}.bind(null, message));
+			}
+        }
+    })
+}
 
 app.listen(PORT);
-
 
 function handleResponse(error, response, body) {
   if (!error && response.statusCode == 200 && logging) {
