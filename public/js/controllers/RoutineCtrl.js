@@ -18,7 +18,8 @@ myModule.controller('RoutineController', ['$scope', '$http', 'Routine', function
     		"name": $scope.newRoutineName,
     		"hour": $scope.newRoutineHour,
     		"minute": $scope.newRoutineMinute,
-    		"dayOfWeek": routineArray
+    		"dayOfWeek": routineArray,
+            "message": $scope.newRoutineMessage
     	};
 
         //console.log(json);

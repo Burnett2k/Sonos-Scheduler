@@ -68,10 +68,11 @@ function newRoutine(req) {
 	newRule.dayOfWeek = [0, new schedule.Range(0, 6)];
 	newRule.minute = req.body.minute;
 	newRule.hour = req.body.hour;
+	newRule.message = req.body.message;
 	
 	schedule.scheduleJob(newRule, function() {
 		//todo update to take a text parameter or something
-		request('http://localhost:5005/master%20room/say/good evening sawyer. I hope you had a good day today! Please try and read a book or reflect on the day before bed', function (error, response, body) {
+		request('http://localhost:5005/master%20room/say/' + newRule.message, function (error, response, body) {
 		 	handleResponse(error, response, body);
 		 	console.log("timer was hit");
 		})

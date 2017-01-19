@@ -8,5 +8,6 @@ module.exports = mongoose.model('Routine', {
     name : {type : String, default: ''},
     hour : {type : Number, default: 0},
     minute : {type : Number, default: 0},
+    message : {type: String, default: ''},
     dayOfWeek : [Number]
 });

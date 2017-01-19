@@ -31,6 +31,7 @@ var Routine = require('./models/routine');
             routine.hour = req.body.hour;
             routine.minute = req.body.minute;
             routine.dayOfWeek = req.body.dayOfWeek;
+            routine.message = req.body.message;
             console.log('routine = ' + routine);
 
             routine.save(function(err, routine) {
