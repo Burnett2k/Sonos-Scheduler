@@ -67,7 +67,7 @@ function newRoutine(req) {
 	var newRuleName = req.body.name;
 
 	//todo update to 
-	newRule.dayOfWeek = [0, new schedule.Range(0, 6)];
+	newRule.dayOfWeek = [0, req.body.dayOfWeek];
 	newRule.minute = req.body.minute;
 	newRule.hour = req.body.hour;
 	newRule.message = req.body.message;

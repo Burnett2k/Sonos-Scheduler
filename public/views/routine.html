@@ -5,19 +5,40 @@
 
     <div>
 	    <label style="padding-right:10px;">Name</label>
-		<input type="text" ng-model="newRoutineName" ng-maxlength="50"></input>
+		<input type="text" ng-model="newRoutineName" ng-maxlength="50">
 	</div>
 	<div>
 		<label style="padding-right:10px;">Hour</label>
-		<input type="number" ng-model="newRoutineHour" ng-maxlength="2"></input>
+		<input type="number" ng-model="newRoutineHour" ng-maxlength="2">
 	</div>
 	<div>
 		<label style="padding-right:10px;">Minute</label>
-		<input type="number" ng-model="newRoutineMinute" ng-maxlength="2"></input>
+		<input type="number" ng-model="newRoutineMinute" ng-maxlength="2">
 	</div>
 	<div>
 		<label style="padding-right:10px;">Day Of Week</label>
-		<input type="text" ng-model="newRoutineDayOfWeek"></input>
+		<label class="checkbox-inline">
+		  <input type="checkbox" ng-model="checkboxModel.sunday" ng-true-value=true ng-false-value=false> Sunday
+		</label>
+		<label class="checkbox-inline">
+		  <input type="checkbox" id="monday" ng-model="checkboxModel.monday" ng-true-value=true ng-false-value=false> Monday
+		</label>
+		<label class="checkbox-inline">
+		  <input type="checkbox" id="tuesday" ng-model="checkboxModel.tuesday" ng-true-value=true ng-false-value=false> Tuesday
+		</label>
+		<label class="checkbox-inline">
+		  <input type="checkbox" id="wednesday" ng-model="checkboxModel.wednesday" ng-true-value=true ng-false-value=false> Wednesday
+		</label>
+		<label class="checkbox-inline">
+		  <input type="checkbox" id="thursday" ng-model="checkboxModel.thursday" ng-true-value=true ng-false-value=false> Thursday
+		</label>
+		<label class="checkbox-inline">
+		  <input type="checkbox" id="friday" ng-model="checkboxModel.friday"  ng-true-value=true ng-false-value=false> Friday
+		</label>
+		<label class="checkbox-inline">
+		  <input type="checkbox" id="saturday" ng-model="checkboxModel.saturday"  ng-true-value=true ng-false-value=false> Saturday
+		</label>
+		<p> sunday = {{checkboxModel.sunday}} </p>
 	</div>
 	<div>
 		<label style="padding-right:10px;">Message</label>
@@ -45,7 +66,7 @@
 	      <td scope="row">{{$index+1}}</th>
 	      <td>{{value.name}}</td>
 	      <td>{{value.hour}}:{{value.minute}}</td>
-	      <td>Not Finished</td>
+	      <td>{{value.dayOfWeek}}</td>
 	      <td>{{value.message}}</td>
   		  <td><i class="fa fa-times ha-icon" ng-click="deleteRoutine(value)"></i></td>
 	    </tr>
