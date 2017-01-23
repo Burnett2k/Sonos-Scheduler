@@ -70,7 +70,6 @@ function newRoutine(req) {
 	newRule.hour = req.body.hour;
 	
 	schedule.scheduleJob(newRule, function() {
-		//todo update to take a text parameter or something
 		if (req.body.message) {
 			request('http://localhost:5005/master%20room/say/' + req.body.message, function (error, response, body) {
 			 	handleResponse(error, response, body);
