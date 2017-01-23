@@ -7,7 +7,7 @@ myModule.controller('RoutineController', ['$scope', '$http', 'Routine', function
 
     $scope.routines = [];
 
-    $scope.checkboxModel = {
+    $scope.checkboxWeekDayModel = {
         sunday : false,
         monday: false,
         tuesday: false,
@@ -17,6 +17,11 @@ myModule.controller('RoutineController', ['$scope', '$http', 'Routine', function
         saturday: false
     };   
 
+    $scope.checkboxFeatureModel = {
+        getQotd : false,
+        getWeather: false
+    };  
+
     Routine.get().then(function(res) {
     	$scope.routines = res.data;
     })
@@ -25,25 +30,25 @@ myModule.controller('RoutineController', ['$scope', '$http', 'Routine', function
 
         var routineArray = new Array();
 
-        if ($scope.checkboxModel.sunday) { 
+        if ($scope.checkboxWeekDayModel.sunday) { 
             routineArray.push(0);
         };
-        if ($scope.checkboxModel.monday) { 
+        if ($scope.checkboxWeekDayModel.monday) { 
             routineArray.push(1)
         };
-        if ($scope.checkboxModel.tuesday) { 
+        if ($scope.checkboxWeekDayModel.tuesday) { 
             routineArray.push(2)
         };
-        if ($scope.checkboxModel.wednesday) { 
+        if ($scope.checkboxWeekDayModel.wednesday) { 
             routineArray.push(3)
         };
-        if ($scope.checkboxModel.thursday) { 
+        if ($scope.checkboxWeekDayModel.thursday) { 
             routineArray.push(4)
         };
-        if ($scope.checkboxModel.friday) { 
+        if ($scope.checkboxWeekDayModel.friday) { 
             routineArray.push(5)
         };
-        if ($scope.checkboxModel.saturday) { 
+        if ($scope.checkboxWeekDayModel.saturday) { 
             routineArray.push(6)
         };
 
@@ -52,10 +57,11 @@ myModule.controller('RoutineController', ['$scope', '$http', 'Routine', function
     		"hour": $scope.newRoutineHour,
     		"minute": $scope.newRoutineMinute,
     		"dayOfWeek": routineArray,
-            "message": $scope.newRoutineMessage
+            "message": $scope.newRoutineMessage,
+            "getWeather" : $scope.checkboxFeatureModel.getWeather,
+            "getQotd" : $scope.checkboxFeatureModel.getQotd
     	};
 
-        //console.log(json);
         Routine.create(json).then(function(res) {
             console.log("routine saved");
         });

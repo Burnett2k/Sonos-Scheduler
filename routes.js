@@ -32,6 +32,8 @@ var Routine = require('./models/routine');
             routine.minute = req.body.minute;
             routine.dayOfWeek = req.body.dayOfWeek;
             routine.message = req.body.message;
+            routine.getWeather = req.body.getWeather;
+            routine.getQotd = req.body.getQotd;
             console.log('routine = ' + routine);
 
             routine.save(function(err, routine) {

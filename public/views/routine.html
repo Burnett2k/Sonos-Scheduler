@@ -18,27 +18,36 @@
 	<div>
 		<label style="padding-right:10px;">Day Of Week</label>
 		<label class="checkbox-inline">
-		  <input type="checkbox" ng-model="checkboxModel.sunday" ng-true-value=true ng-false-value=false> Sunday
+		  <input type="checkbox" ng-model="checkboxWeekDayModel.sunday" ng-true-value=true ng-false-value=false> Sunday
 		</label>
 		<label class="checkbox-inline">
-		  <input type="checkbox" id="monday" ng-model="checkboxModel.monday" ng-true-value=true ng-false-value=false> Monday
+		  <input type="checkbox" ng-model="checkboxWeekDayModel.monday" ng-true-value=true ng-false-value=false> Monday
 		</label>
 		<label class="checkbox-inline">
-		  <input type="checkbox" id="tuesday" ng-model="checkboxModel.tuesday" ng-true-value=true ng-false-value=false> Tuesday
+		  <input type="checkbox" ng-model="checkboxWeekDayModel.tuesday" ng-true-value=true ng-false-value=false> Tuesday
 		</label>
 		<label class="checkbox-inline">
-		  <input type="checkbox" id="wednesday" ng-model="checkboxModel.wednesday" ng-true-value=true ng-false-value=false> Wednesday
+		  <input type="checkbox" ng-model="checkboxWeekDayModel.wednesday" ng-true-value=true ng-false-value=false> Wednesday
 		</label>
 		<label class="checkbox-inline">
-		  <input type="checkbox" id="thursday" ng-model="checkboxModel.thursday" ng-true-value=true ng-false-value=false> Thursday
+		  <input type="checkbox" ng-model="checkboxWeekDayModel.thursday" ng-true-value=true ng-false-value=false> Thursday
 		</label>
 		<label class="checkbox-inline">
-		  <input type="checkbox" id="friday" ng-model="checkboxModel.friday"  ng-true-value=true ng-false-value=false> Friday
+		  <input type="checkbox" ng-model="checkboxWeekDayModel.friday"  ng-true-value=true ng-false-value=false> Friday
 		</label>
 		<label class="checkbox-inline">
-		  <input type="checkbox" id="saturday" ng-model="checkboxModel.saturday"  ng-true-value=true ng-false-value=false> Saturday
+		  <input type="checkbox" ng-model="checkboxWeekDayModel.saturday"  ng-true-value=true ng-false-value=false> Saturday
 		</label>
-		<p> sunday = {{checkboxModel.sunday}} </p>
+	</div>
+		<div>
+		<label style="padding-right:10px;">Extra Features</label>
+		<label class="checkbox-inline">
+		  <input type="checkbox" ng-model="checkboxFeatureModel.getQotd" ng-true-value=true ng-false-value=false> Get Qotd?
+		</label>
+		<label class="checkbox-inline">
+		  <input type="checkbox" ng-model="checkboxFeatureModel.getWeather" ng-true-value=true ng-false-value=false> Get Weather?
+		</label>
+		<p>{{checkboxFeatureModel.getWeather}}</p>
 	</div>
 	<div>
 		<label style="padding-right:10px;">Message</label>

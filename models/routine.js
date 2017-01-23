@@ -9,5 +9,7 @@ module.exports = mongoose.model('Routine', {
     hour : {type : Number, default: 0},
     minute : {type : Number, default: 0},
     message : {type: String, default: ''},
-    dayOfWeek : [Number]
+    dayOfWeek : [Number],
+    getWeather : {type: Boolean},
+    getQotd : {type: Boolean}
 });

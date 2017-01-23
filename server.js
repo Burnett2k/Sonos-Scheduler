@@ -13,8 +13,6 @@ var Routine = require('./models/routine');
 app.use(bodyParser.json()); 
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); 
 app.use(bodyParser.urlencoded({ extended: true })); 
-
-
 app.use('/', express.static(__dirname + '/public'));
 require('./routes')(app);
 exports = app;
@@ -70,14 +68,21 @@ function newRoutine(req) {
 	newRule.dayOfWeek = [0, req.body.dayOfWeek];
 	newRule.minute = req.body.minute;
 	newRule.hour = req.body.hour;
-	newRule.message = req.body.message;
 	
 	schedule.scheduleJob(newRule, function() {
 		//todo update to take a text parameter or something
-		request('http://localhost:5005/master%20room/say/' + newRule.message, function (error, response, body) {
-		 	handleResponse(error, response, body);
-		 	console.log("timer was hit");
-		})
+		if (req.body.message) {
+			request('http://localhost:5005/master%20room/say/' + req.body.message, function (error, response, body) {
+			 	handleResponse(error, response, body);
+			 	console.log("timer was hit");
+			})
+		}
+		if (req.body.getWeather) {
+			getWeather();
+		}
+		if (req.body.getQotd) {
+			getQotd();
+		}
 	});
 }
 
