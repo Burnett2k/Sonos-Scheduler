@@ -95,7 +95,6 @@ function eveningRoutine() {
 		playFavorite('sleep');
 		setShuffle('on');
 		setVolume(15);
-		setTimeout(eveningGreeting, 10000);
 	})
 }
 
@@ -135,27 +134,12 @@ function morningRoutine() {
 		playFavorite('starred');
 		setShuffle('on');
 		setVolume(20);
-		morningGreeting();
 
 		setTimeout(getWeather, 20000);
 		setTimeout(getQotd, 60000);
 	})
 }
 
-function morningGreeting() {
-	request('http://localhost:5005/master%20room/say/good morning sawyer. Please make sure to have a good day today!', function (error, response, body) {
-			if (handleResponse(error, response, body)) {
-				console.log("successfully sent morning Greeting");	
-			}
-		})
-}
-function eveningGreeting() {
-	request('http://localhost:5005/master%20room/say/good evening sawyer. I hope you had a good day today! Dont forget to finish your five minute journal and reflect on the days accomplishments', function (error, response, body) {
-			if (handleResponse(error, response, body)) {
-				console.log("successfully sent morning Greeting");	
-			}
-		})
-}
 function setShuffle(setting) {
 	request('http://localhost:5005/master%20room/shuffle/' + setting, function (error, response, body) {
 			if (handleResponse(error, response, body)) {
@@ -191,7 +175,6 @@ function setLights(settings) {
 		}
 	})
 }	
-
 
 function getWeather() {
 	var requestURL = darkSkyBaseURL + configuration.darksky + '/' +  configuration.latitude + ',' + configuration.longitude + darkSkyQueryString;
