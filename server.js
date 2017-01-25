@@ -54,8 +54,14 @@ frontPorchLightOnRoutine();
 frontPorchLightOffRoutine();
 addRoutinesFromDB();
 
+
 app.post('/createRoutine', function (req, res) {
 	newRoutine(req, res);
+	res.sendStatus(200);
+});
+
+app.post('/deleteRoutine', function (req, res) {
+	cancelRoutine(req.body.name);
 	res.sendStatus(200);
 });
 
@@ -69,7 +75,7 @@ function newRoutine(req) {
 	newRule.minute = req.body.minute;
 	newRule.hour = req.body.hour;
 	
-	schedule.scheduleJob(newRule, function() {
+	schedule.scheduleJob(newRuleName, newRule, function() {
 		if (req.body.message) {
 			request('http://localhost:5005/master%20room/say/' + req.body.message, function (error, response, body) {
 			 	handleResponse(error, response, body);
@@ -247,6 +253,21 @@ function addRoutinesFromDB() {
 			}
         }
     })
+}
+
+function cancelRoutine(routineName) {
+	var jobs = schedule.scheduledJobs;
+	console.log("entering cancelling job ");
+
+	for(var i in jobs)
+	{
+		console.log(jobs[i].name);
+		if (jobs[i].name == routineName) {
+			console.log("cancelling job " + jobs[i].name);
+			jobs[i].cancel();
+			break;
+		}
+	}
 }
 
 app.listen(PORT);

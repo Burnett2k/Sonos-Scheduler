@@ -77,10 +77,22 @@ myModule.controller('RoutineController', ['$scope', '$http', 'Routine', function
 
     };
     $scope.deleteRoutine = function(routine) {
+        var json = {
+            "name": routine.name
+        }
+
         Routine.delete(routine._id).then(function(res) {
             var index = $scope.routines.indexOf(routine);
             $scope.routines.splice(index, 1);
             console.log("routine deleted");
-        })
+        });
+
+        $http.post('/deleteRoutine', JSON.stringify(json))
+        .then(function() {
+            console.log("success");
+        })   // success
+        .catch(function() {
+            console.log("error");
+        }); // error
     };
 }]);
