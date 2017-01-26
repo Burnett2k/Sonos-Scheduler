@@ -242,14 +242,27 @@ function addRoutinesFromDB() {
     	    for (var i = 0; i < routines.length;i++) {
         		//todo convert this to a more generic method that can be used by newRoutine(req);
         		var newRule = new schedule.RecurrenceRule();
-				newRule.dayOfWeek = [0, new schedule.Range(0, 6)];
+				newRule.dayOfWeek = [0, routines[i].dayOfWeek];
 				newRule.minute = routines[i].minute;
 				newRule.hour = routines[i].hour;
 				var message = routines[i].message;
+				var weather = routines[i].getWeather;
+				var qotd = routines[i].getQotd;
 
-				schedule.scheduleJob(routines[i].name, newRule, function(message) {
-					textToSpeech(message);
-				}.bind(null, message));
+				schedule.scheduleJob(routines[i].name, newRule, function(message, weather, qotd) {
+
+					if (message) { 
+						textToSpeech(message);
+					}
+					if (weather) {
+						getWeather();
+					}
+					if (qotd) {
+						getQotd();
+					}
+
+
+				}.bind(null, message, weather, qotd));
 			}
         }
     })
