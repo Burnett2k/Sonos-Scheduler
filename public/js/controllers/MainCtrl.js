@@ -3,6 +3,28 @@ var myApp = angular.module('MainCtrl', []);
 
 myApp.controller('MainController', ['$scope', '$http', function($scope, $http) {
 
+	$scope.msg = {};
+
+	$scope.currentTrack;
+
+	var source = new EventSource('/sonosChange');
+	source.addEventListener('message', function(event) {
+		$scope.$apply(function()  {
+			$scope.msg = JSON.parse(event.data);
+			console.log(event.data);
+		});
+		
+		// console.log('message received');
+		// console.log(event.data);
+	}, false);
+	source.addEventListener('open', function(e) {
+		console.log("connection was opened");
+	}, false);
+	source.addEventListener('error', function(e) {
+		console.log("error occured");
+		console.log(e);
+	}, false);
+
 	$scope.previousTrack = function () {
 		$http.get('http://localhost:5005/master%20room/previous').
        	then(function (response) { 
