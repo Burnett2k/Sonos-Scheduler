@@ -8,6 +8,7 @@
     "bower": "^1.8.0",
     "ee-first": "^1.1.1",
     "express": "^4.14.0",
+    "forever": "^0.15.3",
     "mongoose": "^4.7.4",
     "ms": "^0.7.2",
     "node-schedule": "^1.2.0",
@@ -18,7 +19,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "start http://localhost:8080 & nodemon server.js"
+    "start": "xdg-open http://localhost:8080 & nodemon server.js"
   },
   "repository": {
     "type": "git",
