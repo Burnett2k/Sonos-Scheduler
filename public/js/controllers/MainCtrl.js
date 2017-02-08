@@ -116,14 +116,14 @@ myApp.controller('MainController', ['$scope', '$http', function($scope, $http) {
 		});
 	};
 	$scope.brightenLights = function() {
-		adjustLights(5);
+		adjustLights('10');
 	};
 	$scope.dimLights = function() {
-		adjustLights(-5);
+		adjustLights('-10');
 	}
 	adjustLights = function(increment) {
 		//doesn't look like there is a method to decrease the value by a certain amount. I'll have to grab the current value to decrease it
-		$http.put('http://192.168.1.2/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', {"bri":increment}).
+		$http.put('http://192.168.1.2/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', {"bri_inc":increment}).
 		then(function (response) {
 			$scope.hueResult = response.statusText;
 		}, function (response) {
