@@ -6,6 +6,7 @@ var Routine = require('./models/routine');
     module.exports = function(app) {
 
         var sonosJson = {};
+        var openConnections = [];
 
         app.get('/api/routines', function(req, res) {
             // use mongoose to get all routines in the database
@@ -63,20 +64,19 @@ var Routine = require('./models/routine');
                 'Connection': 'keep-alive'
             });
 
-           
-            console.log("hitting the server");
-            setInterval(function() {
-                constructSSE(res);
-            }, 5000);
+            console.log("opening event source connection");
+            openConnections.push(res);
 
         });
 
-        function constructSSE(res) {
+        function constructSSE() {
              console.log('constructing sse');
-             if (sonosJson) {
-                console.log(sonosJson);
-                 res.write('\n');
-                 res.write('data: ' + JSON.stringify(sonosJson) + '\n\n');
+             if (openConnections.length > 0) {
+                 if (sonosJson) {
+                    console.log(sonosJson);
+                     openConnections[0].write('\n');
+                     openConnections[0].write('data: ' + JSON.stringify(sonosJson) + '\n\n');
+                }
             }
         }
 
@@ -85,9 +85,7 @@ var Routine = require('./models/routine');
             if (req.body.type == 'transport-state') {
                 console.log('updating sonos json');
                 sonosJson = req.body.data.state.currentTrack;
-                console.log(sonosJson.artist);
-                console.log(sonosJson.title);
-                
+                constructSSE();
             }
             res.sendStatus(200);
         })
