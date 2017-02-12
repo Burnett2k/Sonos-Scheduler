@@ -136,7 +136,7 @@ function frontPorchLightOffRoutine() {
 
 function morningRoutine() {
 	var morningRule = new schedule.RecurrenceRule();
-	morningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
+	morningRule.dayOfWeek = [0, new schedule.Range(1, 5)];
 	morningRule.minute = 00;
 	morningRule.hour = 6;
 	var morningRuleName = 'morningRoutine';
