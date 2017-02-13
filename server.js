@@ -72,8 +72,7 @@ function newRoutine(req) {
 	var newRule = new schedule.RecurrenceRule();
 	var newRuleName = req.body.name;
 
-	//todo update to 
-	newRule.dayOfWeek = [0, req.body.dayOfWeek];
+	newRule.dayOfWeek = req.body.dayOfWeek;
 	newRule.minute = req.body.minute;
 	newRule.hour = req.body.hour;
 	
@@ -96,7 +95,7 @@ function newRoutine(req) {
 
 function eveningRoutine() {
 	var eveningRule = new schedule.RecurrenceRule();
-	eveningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
+	eveningRule.dayOfWeek = new schedule.Range(0, 6, 1);
 	eveningRule.minute = 30;
 	eveningRule.hour = 21;
 	var eveningRuleName = 'eveningRoutine';
@@ -112,7 +111,7 @@ function eveningRoutine() {
 
 function frontPorchLightOnRoutine() {
 	var eveningRule = new schedule.RecurrenceRule();
-	eveningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
+	eveningRule.dayOfWeek = new schedule.Range(0, 6, 1);
 	eveningRule.minute = 30;
 	eveningRule.hour = 18;
 	var eveningRuleName = 'frontPorchLightOnRoutine';
@@ -124,7 +123,7 @@ function frontPorchLightOnRoutine() {
 
 function frontPorchLightOffRoutine() {
 	var eveningRule = new schedule.RecurrenceRule();
-	eveningRule.dayOfWeek = [0, new schedule.Range(0, 6)];
+	eveningRule.dayOfWeek = new schedule.Range(0, 6, 1);
 	eveningRule.minute = 30;
 	eveningRule.hour = 4;
 	var eveningRuleName = 'frontPorchLightOffRoutine';
@@ -136,7 +135,7 @@ function frontPorchLightOffRoutine() {
 
 function morningRoutine() {
 	var morningRule = new schedule.RecurrenceRule();
-	morningRule.dayOfWeek = [0, new schedule.Range(1, 5)];
+	morningRule.dayOfWeek = new schedule.Range(1, 5, 1);
 	morningRule.minute = 00;
 	morningRule.hour = 6;
 	var morningRuleName = 'morningRoutine';
@@ -146,9 +145,6 @@ function morningRoutine() {
 		playFavorite('starred');
 		setShuffle('on');
 		setVolume(20);
-
-		setTimeout(getWeather, 20000);
-		setTimeout(getQotd, 60000);
 	})
 }
 
@@ -244,7 +240,7 @@ function addRoutinesFromDB() {
     	    for (var i = 0; i < routines.length;i++) {
         		//todo convert this to a more generic method that can be used by newRoutine(req);
         		var newRule = new schedule.RecurrenceRule();
-				newRule.dayOfWeek = [0, routines[i].dayOfWeek];
+				newRule.dayOfWeek = routines[i].dayOfWeek;
 				newRule.minute = routines[i].minute;
 				newRule.hour = routines[i].hour;
 				var message = routines[i].message;
