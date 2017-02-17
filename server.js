@@ -77,11 +77,9 @@ function newRoutine(req) {
 	newRule.hour = req.body.hour;
 	
 	schedule.scheduleJob(newRuleName, newRule, function() {
+		console.log(newRuleName + ' routine just popped, boi!');
 		if (req.body.message) {
-			request('http://localhost:5005/master%20room/say/' + req.body.message, function (error, response, body) {
-			 	handleResponse(error, response, body);
-			 	console.log("timer was hit");
-			})
+			textToSpeech(req.body.message);
 		}
 		if (req.body.getWeather) {
 			getWeather();
@@ -222,11 +220,8 @@ function getQotd() {
 			//get first quote in array passed back
 			qotd = 'quote of the day is by: ' + quoteOutput.contents.quotes[0].author + '. It is: ' + quoteOutput.contents.quotes[0].quote;
 			//qotd is giving me issues so i've commented out its usage for now.
-			fullweatherSpeech = sayCommand + qotd;
 			
-			request(fullweatherSpeech, function (error, response, body) {
-				handleResponse(error, response, body);
-			})
+			textToSpeech(qotd);
 		}
 	})
 }
@@ -248,7 +243,7 @@ function addRoutinesFromDB() {
 				var qotd = routines[i].getQotd;
 
 				schedule.scheduleJob(routines[i].name, newRule, function(message, weather, qotd) {
-
+					console.log(routines[i].name + ' routine just popped, boi!');
 					if (message) { 
 						textToSpeech(message);
 					}
