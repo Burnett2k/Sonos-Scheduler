@@ -168,7 +168,7 @@ function playFavorite(playlist) {
 		})
 }
 function textToSpeech(text) {
-	request(sayCommand + text, function (error, response, body) {
+	request(sayCommand + encodeURIComponent(text), function (error, response, body) {
 		if (handleResponse(error, response, body)) {
 			console.log("successfully sent text to sonos");
 		}
@@ -219,8 +219,6 @@ function getQotd() {
 
 			//get first quote in array passed back
 			qotd = 'quote of the day is by: ' + quoteOutput.contents.quotes[0].author + '. It is: ' + quoteOutput.contents.quotes[0].quote;
-			//qotd is giving me issues so i've commented out its usage for now.
-			
 			textToSpeech(qotd);
 		}
 	})
