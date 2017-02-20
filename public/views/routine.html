@@ -70,9 +70,9 @@
 	      <th>Delete?</th>
 	    </tr>
 	  </thead>
-	  <tbody>
-	    <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle" ng-repeat="value in routines">
-	      <td scope="row">{{$index+1}}</th>
+	  <tbody ng-repeat="value in routines">
+	    <tr data-toggle="collapse" data-target="#row-{{$index}}" class="accordion-toggle" >
+	      <td>{{$index+1}}</td>
 	      <td>{{value.name}}</td>
 	      <td>{{value.hour}}:{{value.minute}}</td>
 	      <td>{{value.dayOfWeek}}</td>
@@ -81,7 +81,7 @@
 	    </tr>
 	    <tr>
 	    	<td colspan="6" class="hiddenRow">
-	    		<div id="demo1" class="accordian-body collapse">Here is the expander bro!</div>
+	    		<div id="row-{{$index}}" class="accordian-body collapse">Here is the expander bro!</div>
 	    	</td>
 	    </tr>
   	  </tbody>

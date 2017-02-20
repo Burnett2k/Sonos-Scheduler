@@ -3,3 +3,7 @@
 	cursor: pointer;
 	padding: 10px;
 }
+
+.hiddenRow {
+    padding: 0 !important;
+}
