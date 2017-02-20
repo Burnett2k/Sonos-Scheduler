@@ -71,13 +71,18 @@
 	    </tr>
 	  </thead>
 	  <tbody>
-	    <tr ng-repeat="value in routines">
+	    <tr data-toggle="collapse" data-target="#demo1" class="accordion-toggle" ng-repeat="value in routines">
 	      <td scope="row">{{$index+1}}</th>
 	      <td>{{value.name}}</td>
 	      <td>{{value.hour}}:{{value.minute}}</td>
 	      <td>{{value.dayOfWeek}}</td>
 	      <td>{{value.message}}</td>
   		  <td><i class="fa fa-times ha-icon" ng-click="deleteRoutine(value)"></i></td>
+	    </tr>
+	    <tr>
+	    	<td colspan="6" class="hiddenRow">
+	    		<div id="demo1" class="accordian-body collapse">Here is the expander bro!</div>
+	    	</td>
 	    </tr>
   	  </tbody>
 	</table>
