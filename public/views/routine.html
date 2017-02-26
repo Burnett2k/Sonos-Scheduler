@@ -81,7 +81,9 @@
 	    </tr>
 	    <tr>
 	    	<td colspan="6" class="hiddenRow">
-	    		<div id="row-{{$index}}" class="accordian-body collapse">Here is the expander bro!</div>
+	    		<div id="row-{{$index}}" class="accordian-body collapse">
+	    			<pre>{{value | json}}</pre>
+	    		</div>
 	    	</td>
 	    </tr>
   	  </tbody>
