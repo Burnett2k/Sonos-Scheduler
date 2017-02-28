@@ -239,9 +239,10 @@ function addRoutinesFromDB() {
 				var message = routines[i].message;
 				var weather = routines[i].getWeather;
 				var qotd = routines[i].getQotd;
+				var name = routines[i].name;
 
-				schedule.scheduleJob(routines[i].name, newRule, function(message, weather, qotd) {
-					console.log(routines[i].name + ' routine just popped, boi!');
+				schedule.scheduleJob(name, newRule, function(message, weather, qotd, name) {
+					console.log(name + ' routine just popped, boi!');
 					if (message) { 
 						textToSpeech(message);
 					}
@@ -251,9 +252,7 @@ function addRoutinesFromDB() {
 					if (qotd) {
 						getQotd();
 					}
-
-
-				}.bind(null, message, weather, qotd));
+				}.bind(null, message, weather, qotd, name));
 			}
         }
     })
