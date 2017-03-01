@@ -47,7 +47,7 @@ var currentDate = new Date();
 var year = currentDate.getFullYear();
 var month = currentDate.getMonth();
 var day = currentDate.getDate();
-var currentDateUNIX = new Date(year, month, day).getTime() / 1000;
+
 var hueBridgeIp;
 
 getHueBridgeIp();
@@ -184,12 +184,15 @@ function setLights(settings) {
 
 function getWeather() {
 	var requestURL = darkSkyBaseURL + configuration.darksky + '/' +  configuration.latitude + ',' + configuration.longitude + darkSkyQueryString;
+
 	//sending request to darksky api to get weather information
 	console.log("getting weather");
 	console.log("Hitting API for weather: " + requestURL);
-	console.log("current UNIX time " + currentDateUNIX);
+	
 	request(requestURL, function (error, response, body) {
 		if (handleResponse(error, response, body)) {
+			var currentDateUNIX = new Date(year, month, day).getTime() / 1000;
+			console.log("current UNIX time " + currentDateUNIX);
 			weatherOutput = JSON.parse(body);
 			var daily = weatherOutput.daily.data;
 			
