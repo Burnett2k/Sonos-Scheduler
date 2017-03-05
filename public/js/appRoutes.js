@@ -13,6 +13,11 @@
         .when('/routines', {
             templateUrl: 'views/routine.html',
             controller: 'RoutineController'
+        })
+
+        .when('/wods', {
+            templateUrl: 'views/wod.html',
+            controller: 'WODController'
         });
 
     $locationProvider.html5Mode(true);
