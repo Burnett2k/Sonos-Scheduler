@@ -1,15 +1,15 @@
 <div class="jumbotron" ng-controller="WODController">
 	<h1>Here are your WODS</h1>
 	<p>{{wod}}</p>
+	<p>Date Range: {{firstDay}} - {{lastDay}}</p>
 
 
 	<div class="btn-group-vertical" role="group" aria-label="">
-		<button type="button" class="btn btn-danger">Hips</button>
-		<button type="button" class="btn btn-danger">Ankles</button>
-		<button type="button" class="btn btn-danger">Wrists</button>
-		<button type="button" class="btn btn-danger">Neck</button>
-		<button type="button" class="btn btn-danger">Shoulders</button>
-		<button type="button" class="btn btn-danger">Low Back</button>
+
+	<button ng-repeat="item in wods" type="button" class="btn" ng-class="buttonClass" ng-click="changeButtonClass()">
+	id = {{item.id}} wod = {{item.key}}
+	</button>
+
 	</div>
 
 
