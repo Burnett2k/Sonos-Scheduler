@@ -14,6 +14,7 @@ myApp.controller('WODController', ['$scope', '$http', function($scope, $http) {
 
 	$scope.wod = 'Workout of the day is...';
 	$scope.buttonClass = "btn-danger";
+	$scope.activeButtons = [];
 	
 	var now = new Date();
 	var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -23,22 +24,29 @@ myApp.controller('WODController', ['$scope', '$http', function($scope, $http) {
 	$scope.firstDay = sunday.getMonth() + 1 + "/" + sunday.getDate() + "/" + sunday.getFullYear();
 	$scope.lastDay =  saturday.getMonth() + 1 + "/" + saturday.getDate() + "/" +saturday.getFullYear();
 
-	$scope.changeButtonClass = function() {
-		console.log("changing button class");
-		if ($scope.buttonClass === "btn-danger")  {
+	$scope.toggleButtonState = function(id) {
+		console.log("id = " + id);
+		//check if id exists in array. if it does, remove it. if it doesn't add it.
+		if ($.inArray(id, $scope.activeButtons) > -1) {
+			console.log("it is in array so we will delete");
 
-			$scope.buttonClass = 'btn-success';
+			//delete
+			$scope.activeButtons.splice($scope.activeButtons.indexOf(id));
+
 		} else {
-			$scope.buttonClass = 'btn-danger';
+			console.log("not in array so adding");
+			$scope.activeButtons.push(id);
 		}
+
+		console.log($scope.activeButtons);
 	};
 
 	$scope.wods = [
-            {id: 1, key: 'ankles'}
-            , {id: 2, key: 'wrist'}
-            , {id: 3, key: 'shoulder'}
+            {id: 0, key: 'ankles'}
+            , {id: 1, key: 'wrist'}
+            , {id: 2, key: 'shoulder'}
             , {id: 3, key: 'lower back'}
-            , {id: 3, key: 'neck'}
+            , {id: 4, key: 'neck'}
     ];	
 
 }]);	
