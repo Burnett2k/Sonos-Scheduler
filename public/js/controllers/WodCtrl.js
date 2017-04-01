@@ -1,6 +1,6 @@
-var myApp = angular.module('WodCtrl', []);
+var myModule = angular.module('WodCtrl', []);
 
-myApp.directive("toggleButtonClass", function() {
+myModule.directive("toggleButtonClass", function() {
 	return {
 		link: function($scope, element, attr) {
       		element.on("click", function() {
@@ -10,9 +10,9 @@ myApp.directive("toggleButtonClass", function() {
 	}
 })
 
-myApp.controller('WODController', ['$scope', '$http', function($scope, $http) {
+myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', function($scope, $http, Wod, WodLog) {
 
-	$scope.wod = 'Workout of the day is...';
+	//$scope.wod = 'Workout of the day is...';
 	$scope.buttonClass = "btn-danger";
 	$scope.activeButtons = [];
 	
@@ -23,6 +23,14 @@ myApp.controller('WODController', ['$scope', '$http', function($scope, $http) {
 
 	$scope.firstDay = sunday.getMonth() + 1 + "/" + sunday.getDate() + "/" + sunday.getFullYear();
 	$scope.lastDay =  saturday.getMonth() + 1 + "/" + saturday.getDate() + "/" +saturday.getFullYear();
+
+	$scope.wods = [
+        {id: 0, key: 'ankles'}
+        , {id: 1, key: 'wrist'}
+        , {id: 2, key: 'shoulder'}
+        , {id: 3, key: 'lower back'}
+        , {id: 4, key: 'neck'}
+    ];	
 
 	$scope.toggleButtonState = function(id) {
 		console.log("id = " + id);
@@ -41,12 +49,19 @@ myApp.controller('WODController', ['$scope', '$http', function($scope, $http) {
 		console.log($scope.activeButtons);
 	};
 
-	$scope.wods = [
-            {id: 0, key: 'ankles'}
-            , {id: 1, key: 'wrist'}
-            , {id: 2, key: 'shoulder'}
-            , {id: 3, key: 'lower back'}
-            , {id: 4, key: 'neck'}
-    ];	
+
+
+    $scope.createWod = function() {
+
+    	var json = {
+    		"name": $scope.newWodName,
+    		"description": $scope.newWodDescription,
+    		"imgs": [ $scope.newWodImage1 ]
+    	};
+
+        Wod.create(json).then(function(res) {
+            console.log("routine saved");
+        });
+    };
 
 }]);	

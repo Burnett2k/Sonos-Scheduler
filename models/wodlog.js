@@ -7,5 +7,5 @@ var mongoose = require('mongoose');
 module.exports = mongoose.model('WodLog', {
     wodname : {type : String, default: ''},
     timeCompleted: {type : Date},
-    numOfReps: { type : Number, default 0}
+    numOfReps: { type : Number }
 });

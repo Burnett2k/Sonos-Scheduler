@@ -2,6 +2,8 @@
 
 // grab the nerd model we just created
 var Routine = require('./models/routine');
+var Wod = require('./models/wod');
+var WodLog = require('./models/wodlog');
 
     module.exports = function(app) {
 
@@ -46,6 +48,48 @@ var Routine = require('./models/routine');
         app.delete('/api/routines/:routine_id', function(req, res) {
             Routine.remove({
                 _id: req.params.routine_id}, function(err,bear) {
+                if (err)
+                    res.send(err);
+
+                res.json({ message: 'successfully deleted'});
+            });
+
+        });
+
+        app.get('/api/wods', function(req, res) {
+            // use mongoose to get all routines in the database
+            Routine.find(function(err, wods) {
+
+                // if there is an error retrieving, send the error. 
+                // nothing after res.send(err) will execute
+                if (err)
+                    res.send(err);
+
+                res.json(wods); // return all routines in JSON format
+            });
+        });
+
+        // route to handle creating goes here (app.post)
+        app.post('/api/wods', function (req, res) {
+
+            var routine = new Routine();
+            wod.name = req.body.name;
+            wod.description = req.body.description;
+            wod.imgs = req.body.imgs;
+            console.log('wod = ' + wod);
+
+            Wod.save(function(err, routine) {
+                if (err) return console.error(err);
+
+                res.json({ message: 'wod created!'});
+            });
+
+        });
+
+        // route to handle delete goes here (app.delete)
+        app.delete('/api/wods/:wod_id', function(req, res) {
+            Wod.remove({
+                _id: req.params.wod_id}, function(err,bear) {
                 if (err)
                     res.send(err);
 
