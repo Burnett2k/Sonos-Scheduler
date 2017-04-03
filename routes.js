@@ -58,7 +58,7 @@ var WodLog = require('./models/wodlog');
 
         app.get('/api/wods', function(req, res) {
             // use mongoose to get all routines in the database
-            Routine.find(function(err, wods) {
+            Wod.find(function(err, wods) {
 
                 // if there is an error retrieving, send the error. 
                 // nothing after res.send(err) will execute
@@ -72,13 +72,13 @@ var WodLog = require('./models/wodlog');
         // route to handle creating goes here (app.post)
         app.post('/api/wods', function (req, res) {
 
-            var routine = new Routine();
+            var wod = new Wod();
             wod.name = req.body.name;
             wod.description = req.body.description;
             wod.imgs = req.body.imgs;
             console.log('wod = ' + wod);
 
-            Wod.save(function(err, routine) {
+            wod.save(function(err, wod) {
                 if (err) return console.error(err);
 
                 res.json({ message: 'wod created!'});
