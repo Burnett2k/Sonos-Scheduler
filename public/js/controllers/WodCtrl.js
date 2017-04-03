@@ -61,4 +61,20 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
         });
     };
 
+    $scope.createWodLog = function(wodId, wodLogName) {
+    	var json = {
+    		"wodId": wodId,
+    	    "wodName" : wodLogName,
+		    "timeCompleted": new Date()
+    	};
+
+        WodLog.create(json).then(function(res) {
+            console.log("wod log saved");
+        });
+    }
+
+    $scope.deleteWodLog = function(wod) {
+
+    }
+
 }]);	

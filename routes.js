@@ -98,6 +98,36 @@ var WodLog = require('./models/wodlog');
 
         });
 
+        // route to handle creating goes here (app.post)
+        app.post('/api/wodlogs', function (req, res) {
+
+            var wodlog = new WodLog();
+            wodlog.wodId = req.body.wodId
+            wodlog.wodName = req.body.wodName;
+            wodlog.timeCompleted = req.body.timeCompleted;
+
+            console.log('wodlog = ' + wodlog);
+
+            wodlog.save(function(err, wodlog) {
+                if (err) return console.error(err);
+
+                res.json({ message: 'wod created!'});
+            });
+
+        });
+
+        // route to handle delete goes here (app.delete)
+        app.delete('/api/wodlogs/:wodlog_id', function(req, res) {
+            WodLog.remove({
+                _id: req.params.wodlog_id}, function(err,bear) {
+                if (err)
+                    res.send(err);
+
+                res.json({ message: 'successfully deleted'});
+            });
+
+        });
+
         app.get('/sonosChange', function (req, res) {
              // set timeout as high as possible
              req.socket.setTimeout(Number.MAX_VALUE);

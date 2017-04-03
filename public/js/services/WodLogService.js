@@ -8,7 +8,7 @@ angular.module('WodLogService', []).factory('WodLog', ['$http', function($http) 
 
         // call to POST and create a new wod
         create : function(wodlogData) {
-            return $http.post('/api/wodlogs', wodLogData);
+            return $http.post('/api/wodlogs', wodlogData);
         },
 
         // call to DELETE a wod
