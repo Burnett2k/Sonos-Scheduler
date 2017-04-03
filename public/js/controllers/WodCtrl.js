@@ -15,6 +15,7 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
 	//$scope.wod = 'Workout of the day is...';
 	$scope.buttonClass = "btn-danger";
 	$scope.activeButtons = [];
+	$scope.wods = [];
 	
 	var now = new Date();
 	var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -24,13 +25,9 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
 	$scope.firstDay = sunday.getMonth() + 1 + "/" + sunday.getDate() + "/" + sunday.getFullYear();
 	$scope.lastDay =  saturday.getMonth() + 1 + "/" + saturday.getDate() + "/" +saturday.getFullYear();
 
-	$scope.wods = [
-        {id: 0, key: 'ankles'}
-        , {id: 1, key: 'wrist'}
-        , {id: 2, key: 'shoulder'}
-        , {id: 3, key: 'lower back'}
-        , {id: 4, key: 'neck'}
-    ];	
+    Wod.get().then(function(res) {
+    	$scope.wods = res.data;
+    });	
 
 	$scope.toggleButtonState = function(id) {
 		console.log("id = " + id);

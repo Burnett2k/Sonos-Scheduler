@@ -19,3 +19,4 @@ angular.module('WodService', []).factory('Wod', ['$http', function($http) {
     }       
 
 }]);
+
