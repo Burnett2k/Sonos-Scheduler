@@ -46,7 +46,7 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
 		console.log($scope.activeButtons);
 	};
 
-
+//todo need to call one method from ng-click that handles all of the logic of saving / deleting and setting the active / inactive buttons.
 
     $scope.createWod = function() {
 
