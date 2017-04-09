@@ -98,6 +98,19 @@ var WodLog = require('./models/wodlog');
 
         });
 
+        app.get('/api/wodlogs', function(req, res) {
+            // use mongoose to get all routines in the database
+            WodLog.find(function(err, wodlogs) {
+
+                // if there is an error retrieving, send the error. 
+                // nothing after res.send(err) will execute
+                if (err)
+                    res.send(err);
+
+                res.json(wodlogs); // return all routines in JSON format
+            });
+        });
+
         // route to handle creating goes here (app.post)
         app.post('/api/wodlogs', function (req, res) {
 
@@ -106,18 +119,22 @@ var WodLog = require('./models/wodlog');
             wodlog.wodName = req.body.wodName;
             wodlog.timeCompleted = req.body.timeCompleted;
 
-            console.log('wodlog = ' + wodlog);
+            console.log('created wodlog = ' + wodlog);
 
             wodlog.save(function(err, wodlog) {
                 if (err) return console.error(err);
 
-                res.json({ message: 'wod created!'});
+                res.json({ wodLog: wodlog});
             });
 
         });
 
         // route to handle delete goes here (app.delete)
         app.delete('/api/wodlogs/:wodlog_id', function(req, res) {
+            console.log("made it into routes.js logging");
+
+            console.log(req.params.wodlog_id);
+
             WodLog.remove({
                 _id: req.params.wodlog_id}, function(err,bear) {
                 if (err)

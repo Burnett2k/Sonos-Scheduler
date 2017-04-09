@@ -16,6 +16,7 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
 	$scope.buttonClass = "btn-danger";
 	$scope.activeButtons = [];
 	$scope.wods = [];
+	$scope.wodLogs = [];
 	
 	var now = new Date();
 	var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -29,18 +30,26 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
     	$scope.wods = res.data;
     });	
 
-	$scope.toggleButtonState = function(id) {
-		console.log("id = " + id);
+    WodLog.get().then(function(res) {
+    	$scope.wodLogs = res.data;
+    	console.log($scope.wodLogs);
+    });
+
+	$scope.toggleButtonState = function(wod) {
+		console.log("id = " + wod._id);
 		//check if id exists in array. if it does, remove it. if it doesn't add it.
-		if ($.inArray(id, $scope.activeButtons) > -1) {
+		if ($.inArray(wod._id, $scope.activeButtons) > -1) {
 			console.log("it is in array so we will delete");
 
 			//delete
-			$scope.activeButtons.splice($scope.activeButtons.indexOf(id));
+			$scope.activeButtons.splice($scope.activeButtons.indexOf(wod._id));
+			deleteWodLog(wod);
+
 
 		} else {
 			console.log("not in array so adding");
-			$scope.activeButtons.push(id);
+			$scope.activeButtons.push(wod._id);
+			createWodLog(wod);
 		}
 
 		console.log($scope.activeButtons);
@@ -61,20 +70,36 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
         });
     };
 
-    $scope.createWodLog = function(wodId, wodLogName) {
+    createWodLog = function(wod) {
     	var json = {
-    		"wodId": wodId,
-    	    "wodName" : wodLogName,
+    		"wodId": wod._id,
+    	    "wodName" : wod.wodName,
 		    "timeCompleted": new Date()
     	};
 
+    	//todo move adding to the array after the db save maybe?
         WodLog.create(json).then(function(res) {
+            $scope.wodLogs.push(res.data.wodLog);
             console.log("wod log saved");
         });
     }
 
-    $scope.deleteWodLog = function(wod) {
+    deleteWodLog = function(wod) {
+    	//todo move adding to the array after the db save maybe?
+    	$scope.wodLogs.forEach( function (wodLog)
+		{
+			console.log("entering loop");
 
+			if (wod._id === wodLog.wodId) {
+				
+		 	   var wodId = wodLog.wodId;
+		 	   console.log("found a match");
+		 	    WodLog.delete(wodLog._id).then(function(res) {
+	 	    		$scope.wodLogs.splice($scope.wodLogs.indexOf(wodLog._id));
+    				console.log("deleted");
+				});
+			}
+		});
     }
 
 }]);	
