@@ -32,7 +32,11 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
 
     WodLog.get().then(function(res) {
     	$scope.wodLogs = res.data;
-    	console.log($scope.wodLogs);
+
+    	//when we retrieve routines add them to an active arrow for button class
+    	$scope.wodLogs.forEach( function (wodlog) {
+    		$scope.activeButtons.push(wodlog.wodId);
+    	});
     });
 
 	$scope.toggleButtonState = function(wod) {
