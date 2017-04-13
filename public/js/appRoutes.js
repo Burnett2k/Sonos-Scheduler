@@ -18,6 +18,10 @@
         .when('/wods', {
             templateUrl: 'views/wod.html',
             controller: 'WODController'
+        })
+
+        .otherwise({
+            redirectTo: '/'
         });
 
     $locationProvider.html5Mode(true);

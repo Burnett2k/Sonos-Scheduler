@@ -1,5 +1,4 @@
 // app/routes.js
-
 // grab the nerd model we just created
 var Routine = require('./models/routine');
 var Wod = require('./models/wod');
@@ -187,7 +186,9 @@ var WodLog = require('./models/wodlog');
         // re-route all your requests to the home page.
         app.get('*', function(req, res) {
             console.log("serving up view index.html");
-            res.sendFile(__dirname + '/public/views/index.html'); // load our public/index.html file
+            res.sendFile('/public/index.html', { root : __dirname}); // load our public/index.html file
         });
+
+
 
     };
