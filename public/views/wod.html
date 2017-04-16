@@ -21,21 +21,20 @@
 	<p>Date Range: {{firstDay}} - {{lastDay}}</p>
 
 
-	<div class="btn-group-vertical" role="group" aria-label="">
-
-		<div ng-repeat="item in wods">
-			<button  type="button" class="btn" ng-class="activeButtons.indexOf(item._id) > -1 ? 'btn-success' : 'btn-danger'" ng-click="toggleButtonState(item)">
-				{{item.name}}
-			</button>
-			<div ng-repeat="img in item.imgs">
-				<img ng-src="{{img}}">
-				</img>
+	<div class=row>
+		<div class="col-sm-3"  ng-repeat="item in wods">
+			<div class="card">
+				<div ng-repeat="img in item.imgs">
+					<img class="card-img-top" ng-src="{{img}}">
+				</div>
+				<div class="card-block">
+					<h4 class="card-title">{{item.name}}</h4>
+					<p class="card-text">{{item.description}}</p>
+					<button  type="button" class="btn" ng-class="activeButtons.indexOf(item._id) > -1 ? 'btn-success' : 'btn-danger'" ng-click="toggleButtonState(item)">
+						{{item.name}}
+					</button>
+				</div>
 			</div>
-
 		</div>
-	
-
 	</div>
-
-
 </div>
