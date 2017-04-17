@@ -22,18 +22,18 @@
 		<i class="glyphicon glyphicon-chevron-right ha-icon col-sm-1" ng-click="getNextWeekWodLog()" title="Play"></i>
 	</div>
 
-	<div class=row>
+	<div class="row" ng-repeat="item in wods track by $index" ng-if="$index % 4 == 0">
 
-		<div class="col-sm-3"  ng-repeat="item in wods">
+		<div class="col-sm-3" ng-repeat="i in [$index, $index + 1, $index + 2, $index + 3]" ng-if="wods[i] != null">
 			<div class="card">
-				<div ng-repeat="img in item.imgs">
+				<div ng-repeat="img in wods[i].imgs">
 					<img class="card-img-top" ng-src="{{img}}">
 				</div>
 				<div class="card-block">
-					<h4 class="card-title">{{item.name}}</h4>
-					<p class="card-text">{{item.description}}</p>
-					<button  type="button" class="btn" ng-class="activeButtons.indexOf(item._id) > -1 ? 'btn-success' : 'btn-danger'" ng-click="toggleButtonState(item)">
-						{{item.name}}
+					<h4 class="card-title">{{wods[i].name}}</h4>
+					<p class="card-text">{{wods[i].description}}</p>
+					<button  type="button" class="btn" ng-class="activeButtons.indexOf(wods[i]._id) > -1 ? 'btn-success' : 'btn-danger'" ng-click="toggleButtonState(wods[i])">
+						{{wods[i].name}}
 					</button>
 				</div>
 			</div>
