@@ -73,6 +73,18 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
         });
     };
 
+    $scope.getPreviousWeekWodLog = function() {
+
+    };
+
+	$scope.getNextWeekWodLog = function() {
+
+	};
+
+	$scope.getCurrentWeekWodLog = function() {
+
+	};
+
     createWodLog = function(wod) {
     	var json = {
     		"wodId": wod._id,
