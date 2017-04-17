@@ -74,11 +74,17 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
     };
 
     $scope.getPreviousWeekWodLog = function() {
-
+    	sunday.setDate(sunday.getDate() - 7);
+    	saturday.setDate(saturday.getDate() - 7);
+    	$scope.firstDay = sunday.getMonth() + 1 + "/" + sunday.getDate() + "/" + sunday.getFullYear();
+		$scope.lastDay =  saturday.getMonth() + 1 + "/" + saturday.getDate() + "/" +saturday.getFullYear();
     };
 
 	$scope.getNextWeekWodLog = function() {
-
+    	sunday.setDate(sunday.getDate() + 7);
+    	saturday.setDate(saturday.getDate() + 7);
+    	$scope.firstDay = sunday.getMonth() + 1 + "/" + sunday.getDate() + "/" + sunday.getFullYear();
+		$scope.lastDay =  saturday.getMonth() + 1 + "/" + saturday.getDate() + "/" +saturday.getFullYear();
 	};
 
 	$scope.getCurrentWeekWodLog = function() {
