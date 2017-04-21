@@ -17,6 +17,7 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
 	$scope.activeButtons = [];
 	$scope.wods = [];
 	$scope.wodLogs = [];
+	$scope.editing = false;
 	
 	var now = new Date();
 	var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -90,6 +91,11 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
 	$scope.getCurrentWeekWodLog = function() {
 
 	};
+
+	$scope.toggleEditing = function() {
+		//change this to an array of items based on _id
+		$scope.editing = !$scope.editing;
+	}
 
     createWodLog = function(wod) {
     	var json = {
