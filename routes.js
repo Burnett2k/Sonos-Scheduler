@@ -99,7 +99,17 @@ var WodLog = require('./models/wodlog');
 
         app.get('/api/wodlogs', function(req, res) {
             // use mongoose to get all routines in the database
-            WodLog.find(function(err, wodlogs) {
+
+            var begDate = req.query.begDate;
+            var endDate = req.query.endDate;
+
+            WodLog.find(
+            {
+                "timeCompleted" : 
+                {
+                    "$gte": begDate, "$lt": endDate
+                }
+            },function(err, wodlogs) {
 
                 // if there is an error retrieving, send the error. 
                 // nothing after res.send(err) will execute

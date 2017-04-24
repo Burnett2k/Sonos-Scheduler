@@ -31,7 +31,7 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
     	$scope.wods = res.data;
     });	
 
-    WodLog.get().then(function(res) {
+    WodLog.get($scope.firstDay, $scope.lastDay).then(function(res) {
     	$scope.wodLogs = res.data;
 
     	//when we retrieve routines add them to an active arrow for button class
@@ -39,6 +39,20 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
     		$scope.activeButtons.push(wodlog.wodId);
     	});
     });
+
+
+    getWodLogs = function() {
+	    WodLog.get($scope.firstDay, $scope.lastDay).then(function(res) {
+	    	$scope.wodLogs = res.data;
+
+	    	$scope.activeButtons = [];
+
+	    	//when we retrieve routines add them to an active arrow for button class
+	    	$scope.wodLogs.forEach( function (wodlog) {
+	    		$scope.activeButtons.push(wodlog.wodId);
+	    	});
+	    });
+    };
 
 	$scope.toggleButtonState = function(wod) {
 		console.log("id = " + wod._id);
@@ -79,6 +93,7 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
     	saturday.setDate(saturday.getDate() - 7);
     	$scope.firstDay = sunday.getMonth() + 1 + "/" + sunday.getDate() + "/" + sunday.getFullYear();
 		$scope.lastDay =  saturday.getMonth() + 1 + "/" + saturday.getDate() + "/" +saturday.getFullYear();
+		getWodLogs();
     };
 
 	$scope.getNextWeekWodLog = function() {
@@ -86,10 +101,7 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
     	saturday.setDate(saturday.getDate() + 7);
     	$scope.firstDay = sunday.getMonth() + 1 + "/" + sunday.getDate() + "/" + sunday.getFullYear();
 		$scope.lastDay =  saturday.getMonth() + 1 + "/" + saturday.getDate() + "/" +saturday.getFullYear();
-	};
-
-	$scope.getCurrentWeekWodLog = function() {
-
+		getWodLogs();
 	};
 
 	$scope.toggleEditing = function() {

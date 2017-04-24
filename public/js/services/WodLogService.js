@@ -2,8 +2,8 @@ angular.module('WodLogService', []).factory('WodLog', ['$http', function($http) 
 
     return {
         // call to get all wods
-        get : function() {
-            return $http.get('/api/wodlogs');
+        get : function(begDate, endDate) {
+            return $http.get("/api/wodlogs", {params: {"begDate": begDate, "endDate": endDate}})
         },
 
         // call to POST and create a new wod
