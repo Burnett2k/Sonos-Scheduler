@@ -107,7 +107,7 @@ var WodLog = require('./models/wodlog');
             {
                 "timeCompleted" : 
                 {
-                    "$gte": begDate, "$lt": endDate
+                    "$gte": begDate, "$lte": endDate
                 }
             },function(err, wodlogs) {
 

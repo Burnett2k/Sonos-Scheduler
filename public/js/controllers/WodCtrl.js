@@ -44,7 +44,6 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
     getWodLogs = function() {
 	    WodLog.get($scope.firstDay, $scope.lastDay).then(function(res) {
 	    	$scope.wodLogs = res.data;
-
 	    	$scope.activeButtons = [];
 
 	    	//when we retrieve routines add them to an active arrow for button class
@@ -110,10 +109,17 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
 	}
 
     createWodLog = function(wod) {
+    	var dateToLog = new Date();
+
+    	//if the last day is earlier than the current date, we are logging for a previous week and default to counting it on Saturday
+    	if (saturday < dateToLog) {
+    		dateToLog = saturday;
+    	}
+
     	var json = {
     		"wodId": wod._id,
     	    "wodName" : wod.wodName,
-		    "timeCompleted": new Date()
+		    "timeCompleted": dateToLog
     	};
 
     	//todo move adding to the array after the db save maybe?
