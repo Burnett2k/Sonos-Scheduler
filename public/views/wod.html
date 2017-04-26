@@ -27,7 +27,7 @@
 		<div class="col-sm-3" ng-repeat="i in [$index, $index + 1, $index + 2, $index + 3]" ng-if="wods[i] != null">
 			<div class="card">
 				<div ng-if="wods[i].imgs.length > 0" ng-repeat="img in wods[i].imgs">
-					<img class="card-img-top" ng-src="{{img}}">
+					<img class="card-img-top" ng-src="{{img ? img : '/imgs/16x9.png'}}">
 					<i class="fa fa-pencil" ng-click="toggleEditing()"></i>
 					<div ng-if="editing">
 						<label style="padding-right:10px;">WODIMAGE</label>
