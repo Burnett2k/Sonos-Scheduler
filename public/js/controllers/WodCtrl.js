@@ -18,6 +18,7 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
 	$scope.wods = [];
 	$scope.wodLogs = [];
 	$scope.editing = null;
+	$scope.newWodImage = null;
 	
 	var now = new Date();
 	var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -103,11 +104,14 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
 		getWodLogs();
 	};
 
-	$scope.toggleEditing = function(i) {
+	$scope.toggleEditing = function(i, img) {
+		
 		if ($scope.editing == i) {
 			$scope.editing = null;
+			$scope.newWodImage = null;
 		} else {
 			$scope.editing = i;	
+			$scope.newWodImage = img;
 		}
 	}
 
