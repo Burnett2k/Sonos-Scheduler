@@ -27,6 +27,11 @@
 		<button ng-click="searchMusicRadio(radioText)">Play</button>
 	</div>
 	<div>
+		<label style="padding-right:10px;">Play Album</label>
+		<input type="text" ng-model="albumText" ng-keydown="($event.which === 13)?searchMusicRadio(albumText):0"></input>
+		<button ng-click="searchMusicAlbum(albumText)">Play</button>
+	</div>
+	<div>
 		<label style="padding-right:10px;">Text to Speech:</label>
 		<input type="text" ng-model="speechText" ng-keydown="($event.which === 13)?sayCommand(speechText):0"></input>
 		<button ng-click="sayCommand(speechText)">SAY</button>

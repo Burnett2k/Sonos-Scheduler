@@ -90,6 +90,18 @@ myApp.controller('MainController', ['$scope', '$http', function($scope, $http) {
 	        });
        }
 	};
+	$scope.searchMusicAlbum = function(albumText) {
+		console.log("searching for songs by " + albumText);
+		if (albumText) {
+			$http.get('http://localhost:5005/master%20room/musicsearch/spotify/album/' + encodeURIComponent(albumText)).
+	       	then(function (response) { 
+	       		$scope.sonosResult = response.data.status;
+	        }, function (response) {
+	       		$scope.sonosResult = 'error';
+	        });
+       }
+	};
+
 	$scope.increaseVolume = function() {
 		adjustVolume('+5');
 	};
