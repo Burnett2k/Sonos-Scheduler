@@ -13,6 +13,10 @@
   height:auto;
 }
 
+.card-block {
+	padding-bottom: 10px;
+}
+
 .fa-pencil {
 	cursor: hand;
 	cursor: pointer;
