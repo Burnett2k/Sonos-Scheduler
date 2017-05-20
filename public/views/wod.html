@@ -28,10 +28,10 @@
 			<div class="card">
 				<div ng-if="wods[i].imgs.length > 0" ng-repeat="img in wods[i].imgs">
 					<img class="card-img-top" ng-src="{{img ? img : '/imgs/16x9.png'}}">
-					<i class="fa fa-pencil" ng-click="toggleEditing()"></i>
-					<div ng-if="editing">
-						<label style="padding-right:10px;">WODIMAGE</label>
-						<input type="text" ng-model="newWodImage" ng-maxlength="500">
+					<i class="fa fa-pencil" ng-click="toggleEditing(i)"></i>
+					<div ng-if="editing == i">
+						<label style="padding-right:10px;">WODIMAGE {{i}} {{editing}}</label>
+						<input type="text" ng-model="newWodImage" ng-maxlength="500" value="{{img}}">
 					</div>
 				</div>
 				<div class="card-block">
