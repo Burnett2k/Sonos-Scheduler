@@ -19,6 +19,7 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
 	$scope.wodLogs = [];
 	$scope.editing = null;
 	$scope.newWodImage = null;
+	$scope.updatedWodImg = null;
 	
 	var now = new Date();
 	var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -55,7 +56,6 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
     };
 
 	$scope.toggleButtonState = function(wod) {
-		console.log("id = " + wod._id);
 		//check if id exists in array. if it does, remove it. if it doesn't add it.
 		if ($.inArray(wod._id, $scope.activeButtons) > -1) {
 			console.log("it is in array so we will delete");
@@ -112,6 +112,25 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
 		} else {
 			$scope.editing = i;	
 			$scope.newWodImage = img;
+		}
+	}
+
+	$scope.updateWodImg = function(wod, imgs) {
+
+
+		var json = {
+			"id" : wod._id,
+			"imgs" : [ imgs ]
+		}
+
+		$scope.editing = null;	
+		$scope.updatedWodImg = null;
+
+		if (json.id && json.imgs) {
+			Wod.update(json).then(function(res) {
+				//update model now that database has been updated
+				wod.imgs = [$scope.updatedWodImg];
+			})
 		}
 	}
 

@@ -31,7 +31,8 @@
 					<i class="fa fa-pencil" ng-click="toggleEditing(i,img)"></i>
 					<div ng-if="editing == i">
 						<label style="padding-right:10px;">WODIMAGE</label>
-						<input type="text" ng-model="newWodImage" ng-maxlength="500">
+						<input type="text" ng-model="updatedWodImg" ng-maxlength="500">
+						<button type="button" ng-click="updateWodImg(wods[i], updatedWodImg)">Update</button>
 					</div>
 				</div>
 				<div class="card-block">

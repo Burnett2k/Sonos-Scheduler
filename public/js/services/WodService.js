@@ -15,6 +15,11 @@ angular.module('WodService', []).factory('Wod', ['$http', function($http) {
         // call to DELETE a wod
         delete : function(id) {
             return $http.delete('/api/wods/' + id);
+        },
+
+        // call to Update a wod
+        update : function(wodData) {
+            return $http.post('/api/wods/' + wodData.id, wodData);
         }
     }       
 

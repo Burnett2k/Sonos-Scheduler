@@ -85,6 +85,15 @@ var WodLog = require('./models/wodlog');
 
         });
 
+        app.post('/api/wods/:wod_id', function(req, res) {
+
+            Wod.update({ _id:req.params.wod_id}, { $set: {imgs: req.body.imgs}}, function(error, wod) {
+                console.log("updated!")
+                res.json(wod);
+            });
+
+        });
+
         // route to handle delete goes here (app.delete)
         app.delete('/api/wods/:wod_id', function(req, res) {
             Wod.remove({
