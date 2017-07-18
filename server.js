@@ -95,7 +95,7 @@ function eveningRoutine() {
 	var eveningRule = new schedule.RecurrenceRule();
 	eveningRule.dayOfWeek = new schedule.Range(0, 6, 1);
 	eveningRule.minute = 30;
-	eveningRule.hour = 21;
+	eveningRule.hour = 8;
 	var eveningRuleName = 'eveningRoutine';
 	 
 	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
@@ -134,8 +134,8 @@ function frontPorchLightOffRoutine() {
 function morningRoutine() {
 	var morningRule = new schedule.RecurrenceRule();
 	morningRule.dayOfWeek = new schedule.Range(1, 5, 1);
-	morningRule.minute = 00;
-	morningRule.hour = 6;
+	morningRule.minute = 30;
+	morningRule.hour = 5;
 	var morningRuleName = 'morningRoutine';
 	var morningRoutine = schedule.scheduleJob(morningRuleName, morningRule, function() {
 		console.log("morning routine starting");
