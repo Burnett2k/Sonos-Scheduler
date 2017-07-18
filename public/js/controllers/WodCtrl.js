@@ -86,6 +86,10 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
         Wod.create(json).then(function(res) {
             console.log("routine saved");
         });
+
+        $scope.newWodName = '';
+        $scope.newWodDescription = '';
+        $scope.newWodImage = '';
     };
 
     $scope.getPreviousWeekWodLog = function() {
@@ -115,7 +119,7 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
 		}
 	}
 
-	$scope.updateWodImg = function(wod, imgs) {
+	$scope.updateWodImg = function(wod, imgs, i) {
 
 
 		var json = {
@@ -129,7 +133,8 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
 		if (json.id && json.imgs) {
 			Wod.update(json).then(function(res) {
 				//update model now that database has been updated
-				wod.imgs = [$scope.updatedWodImg];
+				console.log("updating model");
+				$scope.wods[i].imgs = [$scope.updatedWodImg];	
 			})
 		}
 	}
