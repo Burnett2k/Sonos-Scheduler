@@ -26,13 +26,13 @@
 
 		<div class="col-sm-3" ng-repeat="i in [$index, $index + 1, $index + 2, $index + 3]" ng-if="wods[i] != null">
 			<div class="card">
-				<div ng-if="wods[i].imgs.length > 0" ng-repeat="img in wods[i].imgs">
-					<img class="card-img-top" ng-src="{{img ? img : '/imgs/16x9.png'}}">
-					<i class="fa fa-pencil" ng-click="toggleEditing(i,img)"></i>
+				<div ng-if="wods[i].imgs.length > 0">
+					<img class="card-img-top" ng-src="{{wods[i].imgs[0] ? wods[i].imgs[0] : '/imgs/16x9.png'}}">
+					<i class="fa fa-pencil" ng-click="toggleEditing(i,wods[i].imgs[0])"></i>
 					<div ng-if="editing == i">
 						<label style="padding-right:10px;">WODIMAGE</label>
 						<input type="text" ng-model="updatedWodImg" ng-maxlength="500">
-						<button type="button" ng-click="updateWodImg(wods[i], updatedWodImg)">Update</button>
+						<button type="button" ng-click="updateWodImg(wods[i], updatedWodImg, i)">Update</button>
 					</div>
 				</div>
 				<div class="card-block">

@@ -133,8 +133,7 @@ myModule.controller('WODController', ['$scope', '$http', 'Wod', 'WodLog', functi
 		if (json.id && json.imgs) {
 			Wod.update(json).then(function(res) {
 				//update model now that database has been updated
-				console.log("updating model");
-				$scope.wods[i].imgs = [$scope.updatedWodImg];	
+				$scope.wods[i].imgs = json.imgs;	
 			})
 		}
 	}
