@@ -24,7 +24,7 @@
 
 	<div class="row" ng-repeat="item in wods track by $index" ng-if="$index % 4 == 0">
 
-		<div class="col-sm-3" ng-repeat="i in [$index, $index + 1, $index + 2, $index + 3]" ng-if="wods[i] != null">
+		<div class="col-sm-3" ng-repeat="i in [$index, $index + 1, $index + 2, $index + 3]" ng-if="wods[i] != null"><p>{{i+1}}.</p>
 			<div class="card">
 				<div ng-if="wods[i].imgs.length > 0">
 					<img class="card-img-top" ng-src="{{wods[i].imgs[0] ? wods[i].imgs[0] : '/imgs/16x9.png'}}">
