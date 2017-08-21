@@ -98,13 +98,13 @@ function eveningRoutine() {
 	eveningRule.hour = 8;
 	var eveningRuleName = 'eveningRoutine';
 	 
-	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
-		console.log("evening routine starting");
-		setLights({url: 'http://' + hueBridgeIp + '/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":100}});
-		playFavorite('sleep');
-		setShuffle('on');
-		setVolume(15);
-	})
+	// var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
+	// 	console.log("evening routine starting");
+	// 	setLights({url: 'http://' + hueBridgeIp + '/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":100}});
+	// 	playFavorite('sleep');
+	// 	setShuffle('on');
+	// 	setVolume(15);
+	// })
 }
 
 function frontPorchLightOnRoutine() {
@@ -113,10 +113,10 @@ function frontPorchLightOnRoutine() {
 	eveningRule.minute = 30;
 	eveningRule.hour = 19;
 	var eveningRuleName = 'frontPorchLightOnRoutine';
-	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
-		console.log("turning on front porch light");
-		setLights({url: 'http://' + hueBridgeIp + '/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/2/state/', method: 'PUT', json: {"on":true, "bri":200}});
-	})
+	// var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
+	// 	console.log("turning on front porch light");
+	// 	setLights({url: 'http://' + hueBridgeIp + '/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/2/state/', method: 'PUT', json: {"on":true, "bri":200}});
+	// })
 }
 
 function frontPorchLightOffRoutine() {
@@ -125,10 +125,10 @@ function frontPorchLightOffRoutine() {
 	eveningRule.minute = 30;
 	eveningRule.hour = 5;
 	var eveningRuleName = 'frontPorchLightOffRoutine';
-	var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
-		console.log("turning off front porch light");
-		setLights({url: 'http://' + hueBridgeIp + '/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/2/state/', method: 'PUT', json: {"on":false}});
-	})	
+	// var eveningRoutine = schedule.scheduleJob(eveningRuleName, eveningRule, function() {
+	// 	console.log("turning off front porch light");
+	// 	setLights({url: 'http://' + hueBridgeIp + '/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/2/state/', method: 'PUT', json: {"on":false}});
+	// })	
 }
 
 function morningRoutine() {
@@ -137,13 +137,13 @@ function morningRoutine() {
 	morningRule.minute = 30;
 	morningRule.hour = 5;
 	var morningRuleName = 'morningRoutine';
-	var morningRoutine = schedule.scheduleJob(morningRuleName, morningRule, function() {
-		console.log("morning routine starting");
-		setLights({url: 'http://' + hueBridgeIp + '/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":254}});
-		playFavorite('starred');
-		setShuffle('on');
-		setVolume(20);
-	})
+	// var morningRoutine = schedule.scheduleJob(morningRuleName, morningRule, function() {
+	// 	console.log("morning routine starting");
+	// 	setLights({url: 'http://' + hueBridgeIp + '/api/JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC/lights/1/state/', method: 'PUT', json: {"on":true, "bri":254}});
+	// 	playFavorite('starred');
+	// 	setShuffle('on');
+	// 	setVolume(20);
+	// })
 }
 
 function setShuffle(setting) {
