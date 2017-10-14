@@ -1,5 +1,7 @@
 {
-  "darksky": "",
-  "latitude": "",
-  "longitude": ""
+  "darksky": "83e1822756e05ab215097b9ae280947d",
+  "latitude": "33.2666749",
+  "longitude": "-111.8629462",
+  "hue" : "JFrRiCjcmLRcI8v7RLq1QEpQXZp4UyjXtdjylYyC",
+  "mongoUrl": "mongodb://test:test@ds149278.mlab.com:49278/home_automation"
 }
