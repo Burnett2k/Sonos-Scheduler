@@ -38,6 +38,19 @@ until finished
 
 End with an example of getting some data out of the system or using it for a little demo
 
+### Configuring
+
+The app needs certain api keys to be configured. To do this, create a settings.json file in the root directory
+
+```
+{
+  "darksky": "<insert darksky api key here>",
+  "latitude": "<insert latitude of current location here>",
+  "longitude": "<insert longitude of current location here>",
+  "hue" : "<insert hue light key here for autodiscovery>",
+  "mongoUrl": "<insert mongo database url here>"
+}
+```
 
 ## Built With
 
